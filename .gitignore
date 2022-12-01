@@ -7,8 +7,7 @@
 /dataSources/
 /dataSources.local.xml
 
-#git cache삭제 후 적용
-.gradle
 .idea
+.gradle
 
 application-oauth.properties
