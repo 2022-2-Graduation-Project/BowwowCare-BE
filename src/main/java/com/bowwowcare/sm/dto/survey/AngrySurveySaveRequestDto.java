@@ -1,7 +1,6 @@
 package com.bowwowcare.sm.dto.survey;
 
 import com.bowwowcare.sm.domain.survey.AngrySurvey;
-import com.bowwowcare.sm.domain.survey.SadSurvey;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

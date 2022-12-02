@@ -1,6 +1,5 @@
 package com.bowwowcare.sm.controller;
 
-import com.bowwowcare.sm.dto.survey.SurveySaveRequestDto;
 import com.bowwowcare.sm.service.SurveyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
