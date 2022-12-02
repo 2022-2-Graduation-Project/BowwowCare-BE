@@ -18,7 +18,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin
+@CrossOrigin //cors
 public class SurveyController {
 
     private final SurveyService surveyService;

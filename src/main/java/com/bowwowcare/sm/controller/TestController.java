@@ -19,7 +19,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 @RequiredArgsConstructor
 @RestController
-@CrossOrigin
+@CrossOrigin //cors
 public class TestController {
 
     @Operation(summary = "테스트 get api", description = "^~^")
