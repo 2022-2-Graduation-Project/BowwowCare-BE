@@ -23,8 +23,6 @@ public class AnalyzeResultController {
 
     private final ResultService resultService;
 
-
-
     @Operation(summary = "분석 결과 저장 api", description = "분석 결과 저장하기")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = SadSurveySaveRequestDto.class))),
@@ -39,5 +37,19 @@ public class AnalyzeResultController {
         }
         return new ResponseEntity<>("저장 안됨", HttpStatus.BAD_REQUEST);
     }
+
+
+    @Operation(summary = "분석 결과 알림 api", description = "분석 결과 보여주기")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = SadSurveySaveRequestDto.class))),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @GetMapping(value = "/v1/analyze/{resultId}")
+    public ResponseEntity<?> showAnalyzeResult(@PathVariable("resultId") Long resultId) {
+        return new ResponseEntity<>(resultService.showAnalyzeResult(resultId), HttpStatus.OK);
+    }
+
 
 }

@@ -21,7 +21,11 @@ public class ResultService {
         return true;
     }
 
+    public ResultResponseDto showAnalyzeResult(Long resultId) {
+        ResultResponseDto responseDto = new ResultResponseDto(resultRepository.findById(resultId).get().getResult());
+        return responseDto;
 
+    }
 
 
 }
