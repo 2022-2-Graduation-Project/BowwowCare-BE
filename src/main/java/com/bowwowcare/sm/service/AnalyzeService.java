@@ -15,10 +15,10 @@ public class AnalyzeService {
 
 
     @Transactional
-    public boolean saveAnalyzeResult(AnalyzeRequestDto analyzeRequestDto) {
+    public boolean getAnalyzeResult(AnalyzeRequestDto analyzeRequestDto) {
 
         Analyzation analyzation = analyzeRequestDto.toAnalyzationEntity();
-        analyzationRepository.save(analyzation);
+        //analyzationRepository.save(analyzation);
         return true;
     }
 }

@@ -22,7 +22,7 @@ public class AnalyzeController {
 
     private final AnalyzeService analyzeService;
 
-    @Operation(summary = "분석 결과 저장 api", description = "분석 결과 저장하기- 수정본")
+    @Operation(summary = "분석 결과 응답 api", description = "분석 결과 받기- 수정본")
     @ApiResponses({
             @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AnalyzeRequestDto.class))),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
@@ -30,8 +30,8 @@ public class AnalyzeController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping(value = "/v1/analyze", headers = { "Content-type=application/json" })
-    public ResponseEntity<?> saveSadSurvey(@RequestBody AnalyzeRequestDto analyzeRequestDto) {
-        if(analyzeService.saveAnalyzeResult(analyzeRequestDto)) {
+    public ResponseEntity<?> getAnalyze(@RequestBody AnalyzeRequestDto analyzeRequestDto) {
+        if(analyzeService.getAnalyzeResult(analyzeRequestDto)) {
             return new ResponseEntity<>("Success!", HttpStatus.OK);
         }
         return new ResponseEntity<>("저장 안됨", HttpStatus.BAD_REQUEST);
