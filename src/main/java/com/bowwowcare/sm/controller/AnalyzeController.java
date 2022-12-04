@@ -1,7 +1,6 @@
 package com.bowwowcare.sm.controller;
 
 import com.bowwowcare.sm.dto.analyze.AnalyzeRequestDto;
-import com.bowwowcare.sm.dto.survey.SadSurveySaveRequestDto;
 import com.bowwowcare.sm.service.AnalyzeService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -25,7 +24,7 @@ public class AnalyzeController {
 
     @Operation(summary = "분석 결과 저장 api", description = "분석 결과 저장하기- 수정본")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = SadSurveySaveRequestDto.class))),
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AnalyzeRequestDto.class))),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
