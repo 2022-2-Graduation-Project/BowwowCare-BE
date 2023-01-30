@@ -50,6 +50,11 @@ public class User {
         this.roles.add(role);
     }
 
+    public void updateRefreshToken(String refreshToken) {
+        this.refreshToken = refreshToken;
+    }
+
+
     /*public User update(String name, String profileImgUrl) {
         this.name = name;
         this.profileImgUrl = profileImgUrl;

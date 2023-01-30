@@ -2,6 +2,8 @@ package com.bowwowcare.sm.service;
 
 import com.bowwowcare.sm.domain.user.User;
 import com.bowwowcare.sm.domain.user.UserRepository;
+import com.bowwowcare.sm.dto.user.UserLoginRequestDto;
+import com.bowwowcare.sm.dto.user.UserLoginResponseDto;
 import com.bowwowcare.sm.dto.user.UserRegisterRequestDto;
 import com.bowwowcare.sm.dto.user.UserRegisterResponseDto;
 import com.bowwowcare.sm.jwt.JwtTokenProvider;
@@ -50,4 +52,18 @@ public class SignService {
             throw new UserEmailAlreadyExistsException();
     }
 
+    /**
+     * 로그인 구현
+     * @param userLoginRequestDto
+     * @return 토큰을 만들어 반환(프론트에 토큰을 넘겨주어 프론트에서 헤더에 담는 방식)
+     */
+
+    @Transactional
+    public UserLoginResponseDto loginMember(UserLoginRequestDto userLoginRequestDto) {
+        User user = userRepository.findByEmail(userLoginRequestDto.getEmail()).orElseThrow(LoginFailureException::new);
+        if (!passwordEncoder.matches(userLoginRequestDto.getPassword(), user.getPassword()))
+            throw new LoginFailureException();
+        user.updateRefreshToken(jwtTokenProvider.createRefreshToken());
+        return new UserLoginResponseDto(user.getId(), jwtTokenProvider.createToken(userLoginRequestDto.getEmail()), user.getRefreshToken());
+    }
 }
