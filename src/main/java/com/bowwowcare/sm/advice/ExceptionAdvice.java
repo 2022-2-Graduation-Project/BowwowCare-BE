@@ -1,5 +1,6 @@
 package com.bowwowcare.sm.advice;
 
+import com.bowwowcare.sm.advice.exception.LoginFailureException;
 import com.bowwowcare.sm.advice.exception.UserEmailAlreadyExistsException;
 import com.bowwowcare.sm.advice.result.Result;
 import com.bowwowcare.sm.service.ResponseService;
