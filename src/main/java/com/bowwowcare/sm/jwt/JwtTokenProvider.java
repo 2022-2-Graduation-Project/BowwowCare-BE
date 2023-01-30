@@ -1,11 +1,15 @@
 package com.bowwowcare.sm.jwt;
 
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.RequiredArgsConstructor;
 import lombok.Setter;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
@@ -48,4 +52,28 @@ public class JwtTokenProvider {
                 // signature 에 들어갈 secret값 세팅
                 .compact();
     }
+
+    /**
+     * 토큰으로 인증 객체(Authentication)얻기
+     * @param token
+     * @return
+     */
+    public Authentication getAuthentication(String token) {
+        UserDetails userDetails = userDetailsService.loadUserByUsername(getMemberEmail(token));
+        return new UsernamePasswordAuthenticationToken(userDetails, "", userDetails.getAuthorities());
+    }
+
+    /**
+     * 이메일을 얻기 위해 실제 토큰 디코딩
+     * @param token
+     * @return
+     */
+    public String getMemberEmail(String token) {
+        try {
+            return Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token).getBody().getSubject();
+        } catch(ExpiredJwtException e) {
+            return e.getClaims().getSubject();
+        }
+    }
+
 }
