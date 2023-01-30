@@ -1,5 +1,6 @@
 package com.bowwowcare.sm.advice;
 
+import com.bowwowcare.sm.advice.exception.AuthenticationEntryPointException;
 import com.bowwowcare.sm.advice.exception.InvalidRefreshTokenException;
 import com.bowwowcare.sm.advice.exception.LoginFailureException;
 import com.bowwowcare.sm.advice.exception.UserEmailAlreadyExistsException;
