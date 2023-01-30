@@ -14,6 +14,7 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Component;
 
 import javax.annotation.PostConstruct;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Base64;
 import java.util.Date;
 
@@ -76,4 +77,16 @@ public class JwtTokenProvider {
         }
     }
 
+    public String resolveToken(HttpServletRequest req) {
+        return req.getHeader("X-AUTH-TOKEN");
+    }
+
+    public boolean validateTokenExpiration(String token) {
+        try {
+            Jwts.parser().setSigningKey(secretKey).parseClaimsJws(token);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
 }
