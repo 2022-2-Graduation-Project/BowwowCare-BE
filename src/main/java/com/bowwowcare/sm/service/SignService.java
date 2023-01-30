@@ -1,5 +1,6 @@
 package com.bowwowcare.sm.service;
 
+import com.bowwowcare.sm.advice.exception.UserEmailAlreadyExistsException;
 import com.bowwowcare.sm.domain.user.User;
 import com.bowwowcare.sm.domain.user.UserRepository;
 import com.bowwowcare.sm.dto.token.TokenRequestDto;
