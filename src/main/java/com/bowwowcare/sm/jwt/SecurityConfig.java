@@ -1,5 +1,6 @@
 package com.bowwowcare.sm.jwt;
 
+import com.bowwowcare.sm.config.security.accessDeniedHandler.CustomAccessDeniedHandler;
 import lombok.RequiredArgsConstructor;
 import org.springframework.boot.autoconfigure.security.servlet.PathRequest;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
