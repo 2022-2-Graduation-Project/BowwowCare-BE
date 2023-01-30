@@ -8,6 +8,8 @@ import com.bowwowcare.sm.dto.user.UserRegisterRequestDto;
 import com.bowwowcare.sm.dto.user.UserRegisterResponseDto;
 import com.bowwowcare.sm.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -65,5 +67,33 @@ public class SignService {
             throw new LoginFailureException();
         user.updateRefreshToken(jwtTokenProvider.createRefreshToken());
         return new UserLoginResponseDto(user.getId(), jwtTokenProvider.createToken(userLoginRequestDto.getEmail()), user.getRefreshToken());
+    }
+
+    /**
+     * 토큰 재발행
+     * @param requestDto
+     * @return
+     */
+    @Transactional
+    public TokenResponseDto reIssue(TokenRequestDto requestDto) {
+        if (!jwtTokenProvider.validateTokenExpiration(requestDto.getRefreshToken()))
+            throw new InvalidRefreshTokenException();
+
+        User user = findMemberByToken(requestDto);
+
+        if (!user.getRefreshToken().equals(requestDto.getRefreshToken()))
+            throw new InvalidRefreshTokenException();
+
+        String accessToken = jwtTokenProvider.createToken(user.getEmail());
+        String refreshToken = jwtTokenProvider.createRefreshToken();
+        user.updateRefreshToken(refreshToken);
+        return new TokenResponseDto(accessToken, refreshToken);
+    }
+
+    public User findMemberByToken(TokenRequestDto requestDto) {
+        Authentication auth = jwtTokenProvider.getAuthentication(requestDto.getAccessToken());
+        UserDetails userDetails = (UserDetails) auth.getPrincipal();
+        String username = userDetails.getUsername();
+        return userRepository.findByEmail(username).orElseThrow(UserNotFoundException::new);
     }
 }
