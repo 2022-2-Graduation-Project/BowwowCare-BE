@@ -2,6 +2,8 @@ package com.bowwowcare.sm.service;
 
 import com.bowwowcare.sm.domain.user.User;
 import com.bowwowcare.sm.domain.user.UserRepository;
+import com.bowwowcare.sm.dto.user.UserRegisterRequestDto;
+import com.bowwowcare.sm.dto.user.UserRegisterResponseDto;
 import com.bowwowcare.sm.jwt.JwtTokenProvider;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
