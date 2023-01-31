@@ -37,9 +37,9 @@ public class SignController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping(value = "/join", headers = { "Content-type=application/json" })
-    public SingleResult<UserRegisterResponseDto> register(@RequestBody UserRegisterRequestDto userRegisterRequestDto) {
+    public UserRegisterResponseDto register(@RequestBody UserRegisterRequestDto userRegisterRequestDto) {
         UserRegisterResponseDto responseDto = signService.registerMember(userRegisterRequestDto);
-        return responseService.getSingleResult(responseDto);
+        return responseDto;
     }
 
 
@@ -51,9 +51,9 @@ public class SignController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping(value = "/login", headers = { "Content-type=application/json" })
-    public SingleResult<UserLoginResponseDto> login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
+    public UserLoginResponseDto login(@RequestBody UserLoginRequestDto userLoginRequestDto) {
         UserLoginResponseDto responseDto = signService.loginMember(userLoginRequestDto);
-        return responseService.getSingleResult(responseDto);
+        return responseDto;
     }
 
 
