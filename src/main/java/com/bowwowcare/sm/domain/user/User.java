@@ -22,7 +22,7 @@ public class User {
     private Long id;
 
     @Column(nullable = false, length = 15)
-    private String nickname;
+    private String username;
 
     @Column(nullable = false,unique = true)
     private String email;
@@ -39,11 +39,11 @@ public class User {
     private String profileImgUrl;*/
 
     @Builder
-    public User(String email, String nickname, String password, List<Role>roles) {
+    public User(String email, String username, String password, List<Role>roles) {
         this.email = email;
         this.password = password;
         this.roles = Collections.singletonList(Role.ROLE_USER);
-        this.nickname = nickname;
+        this.username = username;
     }
 
     public void addRole(Role role){

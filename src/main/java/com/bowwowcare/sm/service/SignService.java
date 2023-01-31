@@ -42,7 +42,7 @@ public class SignService {
                         .email(userRegisterRequestDto.getEmail())
                         .password(passwordEncoder.encode(userRegisterRequestDto.getPassword()))
                         //.provider(null)
-                        .nickname(userRegisterRequestDto.getNickname())
+                        .username(userRegisterRequestDto.getUsername())
                         .build());
 
         return UserRegisterResponseDto.builder()
