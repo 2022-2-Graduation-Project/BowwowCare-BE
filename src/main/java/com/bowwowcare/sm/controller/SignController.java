@@ -19,7 +19,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "exception", description = "예외 처리 API")
+@Tag(name = "sign", description = "회원가입/로그인/토큰 API")
 @RestController
 @CrossOrigin
 @RequiredArgsConstructor
