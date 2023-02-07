@@ -5,6 +5,7 @@ import com.bowwowcare.sm.dto.pet.PetRegisterRequestDto;
 import com.bowwowcare.sm.dto.pet.PetRegisterResponseDto;
 import com.bowwowcare.sm.service.PetService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -31,7 +32,7 @@ public class PetController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping("/pets")
-    public PetRegisterResponseDto registerPet(@AuthenticationPrincipal MemberDetails memberDetails, @RequestBody PetRegisterRequestDto petRegisterRequestDto) {
+    public PetRegisterResponseDto registerPet(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails, @RequestBody PetRegisterRequestDto petRegisterRequestDto) {
         PetRegisterResponseDto responseDto = petService.registerPet(petRegisterRequestDto, memberDetails);
         return responseDto;
     }
