@@ -4,15 +4,16 @@ package com.bowwowcare.sm.domain.pet;
 import com.bowwowcare.sm.domain.enums.Gender;
 import com.bowwowcare.sm.domain.enums.Stastus;
 import com.bowwowcare.sm.domain.user.User;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.time.LocalDate;
 
+@Entity
 @Getter
 @NoArgsConstructor
-@Entity
 public class Pet {
 
     @Id
@@ -32,16 +33,27 @@ public class Pet {
     @Column(nullable = false)
     private Gender gender;
 
-    private String petImgUrl;
+    private String petImg;
 
-    private LocalDate birthday;
+    private LocalDate birthDate;
 
-    private LocalDate adoptionDay;
-
-    @Enumerated(EnumType.STRING)
-    private Stastus stastus = Stastus.ACTIVE;
+    private LocalDate adoptionDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
     private User user;
+
+    /*@Enumerated(EnumType.STRING)
+    private Stastus stastus = Stastus.ACTIVE;*/
+
+    @Builder
+    public Pet(String name, Gender gender, String petImg, LocalDate birthDate, LocalDate adoptonDate, User user) {
+
+        this.name = name;
+        this.gender = gender;
+        this.petImg = petImg;
+        this.birthDate = birthDate;
+        this.adoptionDate = adoptonDate;
+        this.user = user;
+    }
 }
