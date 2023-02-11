@@ -29,7 +29,6 @@ public class PetService {
                         .birthDate(petRegisterRequestDto.getBirthDate())
                         .adoptonDate(petRegisterRequestDto.getAdoptionDate())
                         .user(userRepository.findByEmail(memberDetails.getUsername()).get())
-                        //.user(userRepository.getOne(id))
                         .build()
         );
 
