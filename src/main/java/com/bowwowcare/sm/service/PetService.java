@@ -4,7 +4,7 @@ import com.bowwowcare.sm.config.security.member.MemberDetails;
 import com.bowwowcare.sm.domain.enums.Gender;
 import com.bowwowcare.sm.domain.pet.Pet;
 import com.bowwowcare.sm.domain.pet.PetRepository;
-import com.bowwowcare.sm.domain.user.UserRepository;
+import com.bowwowcare.sm.domain.user.MemberRepository;
 import com.bowwowcare.sm.dto.pet.PetRegisterRequestDto;
 import com.bowwowcare.sm.dto.pet.PetRegisterResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -16,7 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class PetService {
 
     private final PetRepository petRepository;
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
 
     @Transactional
     public PetRegisterResponseDto registerPet(PetRegisterRequestDto petRegisterRequestDto, MemberDetails memberDetails) {
@@ -28,7 +28,7 @@ public class PetService {
                         .petImg(petRegisterRequestDto.getPetImg())
                         .birthDate(petRegisterRequestDto.getBirthDate())
                         .adoptonDate(petRegisterRequestDto.getAdoptionDate())
-                        .user(userRepository.findByEmail(memberDetails.getUsername()).get())
+                        .member(memberRepository.findByEmail(memberDetails.getUsername()).get())
                         .build()
         );
 

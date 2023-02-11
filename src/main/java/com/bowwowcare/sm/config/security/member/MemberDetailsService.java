@@ -1,8 +1,8 @@
 package com.bowwowcare.sm.config.security.member;
 
 import com.bowwowcare.sm.advice.exception.UserNotFoundException;
-import com.bowwowcare.sm.domain.user.User;
-import com.bowwowcare.sm.domain.user.UserRepository;
+import com.bowwowcare.sm.domain.user.Member;
+import com.bowwowcare.sm.domain.user.MemberRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -18,16 +18,16 @@ import java.util.stream.Collectors;
 @RequiredArgsConstructor
 public class MemberDetailsService implements UserDetailsService {
 
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
 
     @Override
     public UserDetails loadUserByUsername(String email) throws UsernameNotFoundException {
-        User user = userRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
+        Member member = memberRepository.findByEmail(email).orElseThrow(UserNotFoundException::new);
 
         return MemberDetails.builder()
-                .email(user.getEmail())
-                .password(user.getPassword())
-                .authorities(user.getRoles().stream()
+                .email(member.getEmail())
+                .password(member.getPassword())
+                .authorities(member.getRoles().stream()
                         .map(auth -> new SimpleGrantedAuthority(auth.toString()))
                         .collect(Collectors.toList()))
                 .build();

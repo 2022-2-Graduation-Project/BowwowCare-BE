@@ -4,8 +4,8 @@ import com.bowwowcare.sm.advice.exception.InvalidRefreshTokenException;
 import com.bowwowcare.sm.advice.exception.LoginFailureException;
 import com.bowwowcare.sm.advice.exception.UserEmailAlreadyExistsException;
 import com.bowwowcare.sm.advice.exception.UserNotFoundException;
-import com.bowwowcare.sm.domain.user.User;
-import com.bowwowcare.sm.domain.user.UserRepository;
+import com.bowwowcare.sm.domain.user.Member;
+import com.bowwowcare.sm.domain.user.MemberRepository;
 import com.bowwowcare.sm.dto.token.TokenRequestDto;
 import com.bowwowcare.sm.dto.token.TokenResponseDto;
 import com.bowwowcare.sm.dto.user.UserLoginRequestDto;
@@ -26,7 +26,7 @@ import org.springframework.transaction.annotation.Transactional;
 public class SignService {
 
     private final JwtTokenProvider jwtTokenProvider;
-    private final UserRepository userRepository;
+    private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
 
     /**
@@ -37,8 +37,8 @@ public class SignService {
     @Transactional
     public UserRegisterResponseDto registerMember(UserRegisterRequestDto userRegisterRequestDto) {
         validateDuplicated(userRegisterRequestDto.getEmail());
-        User user = userRepository.save(
-                User.builder()
+        Member member = memberRepository.save(
+                Member.builder()
                         .email(userRegisterRequestDto.getEmail())
                         .password(passwordEncoder.encode(userRegisterRequestDto.getPassword()))
                         //.provider(null)
@@ -46,8 +46,8 @@ public class SignService {
                         .build());
 
         return UserRegisterResponseDto.builder()
-                .id(user.getId())
-                .email(user.getEmail())
+                .id(member.getId())
+                .email(member.getEmail())
                 .build();
     }
 
@@ -56,7 +56,7 @@ public class SignService {
      * @param email
      */
     public void validateDuplicated(String email) {
-        if (userRepository.findByEmail(email).isPresent())
+        if (memberRepository.findByEmail(email).isPresent())
             throw new UserEmailAlreadyExistsException();
     }
 
@@ -68,11 +68,11 @@ public class SignService {
 
     @Transactional
     public UserLoginResponseDto loginMember(UserLoginRequestDto userLoginRequestDto) {
-        User user = userRepository.findByEmail(userLoginRequestDto.getEmail()).orElseThrow(LoginFailureException::new);
-        if (!passwordEncoder.matches(userLoginRequestDto.getPassword(), user.getPassword()))
+        Member member = memberRepository.findByEmail(userLoginRequestDto.getEmail()).orElseThrow(LoginFailureException::new);
+        if (!passwordEncoder.matches(userLoginRequestDto.getPassword(), member.getPassword()))
             throw new LoginFailureException();
-        user.updateRefreshToken(jwtTokenProvider.createRefreshToken());
-        return new UserLoginResponseDto(user.getId(), jwtTokenProvider.createToken(userLoginRequestDto.getEmail()), user.getRefreshToken());
+        member.updateRefreshToken(jwtTokenProvider.createRefreshToken());
+        return new UserLoginResponseDto(member.getId(), jwtTokenProvider.createToken(userLoginRequestDto.getEmail()), member.getRefreshToken());
     }
 
     /**
@@ -85,21 +85,21 @@ public class SignService {
         if (!jwtTokenProvider.validateTokenExpiration(requestDto.getRefreshToken()))
             throw new InvalidRefreshTokenException();
 
-        User user = findMemberByToken(requestDto);
+        Member member = findMemberByToken(requestDto);
 
-        if (!user.getRefreshToken().equals(requestDto.getRefreshToken()))
+        if (!member.getRefreshToken().equals(requestDto.getRefreshToken()))
             throw new InvalidRefreshTokenException();
 
-        String accessToken = jwtTokenProvider.createToken(user.getEmail());
+        String accessToken = jwtTokenProvider.createToken(member.getEmail());
         String refreshToken = jwtTokenProvider.createRefreshToken();
-        user.updateRefreshToken(refreshToken);
+        member.updateRefreshToken(refreshToken);
         return new TokenResponseDto(accessToken, refreshToken);
     }
 
-    public User findMemberByToken(TokenRequestDto requestDto) {
+    public Member findMemberByToken(TokenRequestDto requestDto) {
         Authentication auth = jwtTokenProvider.getAuthentication(requestDto.getAccessToken());
         UserDetails userDetails = (UserDetails) auth.getPrincipal();
         String username = userDetails.getUsername();
-        return userRepository.findByEmail(username).orElseThrow(UserNotFoundException::new);
+        return memberRepository.findByEmail(username).orElseThrow(UserNotFoundException::new);
     }
 }

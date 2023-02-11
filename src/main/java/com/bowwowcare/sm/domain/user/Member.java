@@ -14,8 +14,7 @@ import java.util.List;
 @Entity
 @Getter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-@Table(name = "member") //오류때문에 테이블 이름 수정
-public class User {
+public class Member {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -40,7 +39,7 @@ public class User {
     private String profileImgUrl;*/
 
     @Builder
-    public User(String email, String username, String password, List<Role>roles) {
+    public Member(String email, String username, String password, List<Role>roles) {
         this.email = email;
         this.password = password;
         this.roles = Collections.singletonList(Role.ROLE_USER);

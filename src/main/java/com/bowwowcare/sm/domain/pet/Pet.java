@@ -2,8 +2,7 @@ package com.bowwowcare.sm.domain.pet;
 
 
 import com.bowwowcare.sm.domain.enums.Gender;
-import com.bowwowcare.sm.domain.enums.Stastus;
-import com.bowwowcare.sm.domain.user.User;
+import com.bowwowcare.sm.domain.user.Member;
 import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -41,19 +40,19 @@ public class Pet {
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId")
-    private User user;
+    private Member member;
 
     /*@Enumerated(EnumType.STRING)
     private Stastus stastus = Stastus.ACTIVE;*/
 
     @Builder
-    public Pet(String name, Gender gender, String petImg, LocalDate birthDate, LocalDate adoptonDate, User user) {
+    public Pet(String name, Gender gender, String petImg, LocalDate birthDate, LocalDate adoptonDate, Member member) {
 
         this.name = name;
         this.gender = gender;
         this.petImg = petImg;
         this.birthDate = birthDate;
         this.adoptionDate = adoptonDate;
-        this.user = user;
+        this.member = member;
     }
 }
