@@ -1,7 +1,9 @@
 package com.bowwowcare.sm.controller;
 
+import com.bowwowcare.sm.dto.history.HistoryRequestDto;
 import com.bowwowcare.sm.dto.survey.AggressionRequestDto;
 import com.bowwowcare.sm.dto.survey.AnxietyRequestDto;
+import com.bowwowcare.sm.service.HistoryService;
 import com.bowwowcare.sm.service.SurveyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -22,6 +24,7 @@ import org.springframework.web.bind.annotation.*;
 public class SurveyController {
 
     private final SurveyService surveyService;
+    private final HistoryService historyService;
 
     @Operation(summary = "공격행동 문진표 api", description = "문진표 작성 후 상황별 솔루션 반환 - 공격행동")
     @ApiResponses({
@@ -57,6 +60,24 @@ public class SurveyController {
         }
         catch (Exception e) {
             return new ResponseEntity<>("인코딩 오류!", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    @Operation(summary = "문진 결과 저장 api", description = "문진표 작성 후 상황별 솔루션 쌍을 반려견 별로 저장")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = HistoryRequestDto.class))),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @PostMapping(value = "/v1/survey/result", headers = { "Content-type=application/json" })
+    public ResponseEntity<?> saveSurveyResult(@RequestBody HistoryRequestDto historyRequestDto) {
+        try {
+            return new ResponseEntity<>(historyService.saveHistory(historyRequestDto), HttpStatus.OK);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>("오류!!", HttpStatus.BAD_REQUEST);
         }
     }
 }
