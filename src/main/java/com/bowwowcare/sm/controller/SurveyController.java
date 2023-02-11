@@ -1,6 +1,7 @@
 package com.bowwowcare.sm.controller;
 
 import com.bowwowcare.sm.dto.survey.AggressionRequestDto;
+import com.bowwowcare.sm.dto.survey.AnxietyRequestDto;
 import com.bowwowcare.sm.service.SurveyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.media.Content;
@@ -34,6 +35,25 @@ public class SurveyController {
         //return new ResponseEntity<>(surveyService.findResult(aggressionRequestDto), HttpStatus.OK);
         try {
             return new ResponseEntity<>(surveyService.findAggressionResult(aggressionRequestDto), HttpStatus.OK);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>("인코딩 오류!", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    @Operation(summary = "분리불안 문진표 api", description = "문진표 작성 후 상황별 솔루션 반환 - 분리불안")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AnxietyRequestDto.class))),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @PostMapping(value = "/v1/survey/anxiety", headers = { "Content-type=application/json" })
+    public ResponseEntity<?> findAnxietySurveyResult(@RequestBody AnxietyRequestDto anxietyRequestDto) {
+        //return new ResponseEntity<>(surveyService.findResult(aggressionRequestDto), HttpStatus.OK);
+        try {
+            return new ResponseEntity<>(surveyService.findAnxietyResult(anxietyRequestDto), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntity<>("인코딩 오류!", HttpStatus.BAD_REQUEST);
