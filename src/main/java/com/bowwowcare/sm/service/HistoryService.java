@@ -23,12 +23,13 @@ public class HistoryService {
 
         List<History> historyList = new ArrayList<>();
         for(int i=0; i<historyRequestDto.getSituation().size(); i++){
+            int x = historyRequestDto.getPetId();
             History history = historyRepository.save(
                     History.builder()
                             .type(Type.valueOf(historyRequestDto.getType().toUpperCase()))
                             .situation(historyRequestDto.getSituation().get(i).intValue())
                             .createdDate(historyRequestDto.getCreatedDate())
-                            .pet(petRepository.findByName(historyRequestDto.getPet_name()).get())
+                            .pet(petRepository.getOne(Long.valueOf(x)))
                             .build()
             );
             historyList.add(history);

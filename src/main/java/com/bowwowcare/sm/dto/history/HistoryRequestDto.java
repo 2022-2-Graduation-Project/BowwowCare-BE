@@ -22,5 +22,5 @@ public class HistoryRequestDto {
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
     private LocalDate createdDate;
 
-    private String pet_name;
+    private int petId;
 }
