@@ -5,6 +5,7 @@ import com.bowwowcare.sm.domain.enums.Gender;
 import com.bowwowcare.sm.domain.pet.Pet;
 import com.bowwowcare.sm.domain.pet.PetRepository;
 import com.bowwowcare.sm.domain.user.MemberRepository;
+import com.bowwowcare.sm.dto.pet.PetInfoResponseDto;
 import com.bowwowcare.sm.dto.pet.PetListResponseDto;
 import com.bowwowcare.sm.dto.pet.PetRegisterRequestDto;
 import com.bowwowcare.sm.dto.pet.PetRegisterResponseDto;
@@ -43,6 +44,7 @@ public class PetService {
 
     }
 
+
     public List<PetListResponseDto> findPetListByMember(MemberDetails memberDetails) {
 
         List<PetListResponseDto> finalPetList = new ArrayList<>();
@@ -60,5 +62,21 @@ public class PetService {
         }
 
         return finalPetList;
+    }
+
+
+    public PetInfoResponseDto findPetById(int petId) {
+
+        Pet pet = petRepository.getOne(Long.valueOf(1));
+
+        return PetInfoResponseDto.builder()
+                .id(pet.getId())
+                .name(pet.getName())
+                .petImg(pet.getPetImg())
+                .gender(pet.getGender().toString())
+                .birthDate(pet.getBirthDate())
+                .adoptionDate(pet.getAdoptionDate())
+                .memberId(pet.getMember().getId())
+                .build();
     }
 }

@@ -1,6 +1,7 @@
 package com.bowwowcare.sm.controller;
 
 import com.bowwowcare.sm.config.security.member.MemberDetails;
+import com.bowwowcare.sm.dto.pet.PetInfoResponseDto;
 import com.bowwowcare.sm.dto.pet.PetRegisterRequestDto;
 import com.bowwowcare.sm.dto.pet.PetRegisterResponseDto;
 import com.bowwowcare.sm.service.PetService;
@@ -55,5 +56,19 @@ public class PetController {
         catch (Exception e){
             return new ResponseEntity<>("오류!", HttpStatus.BAD_REQUEST);
         }
+    }
+
+
+    @Operation(summary = "반려동물 상세 정보 조회 api", description = "반려동물 상세 정보 조회")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @GetMapping("/pets/{petId}")
+    public PetInfoResponseDto infoPet(@PathVariable("petId") int petId) {
+        PetInfoResponseDto responseDto = petService.findPetById(petId);
+        return responseDto;
     }
 }
