@@ -67,7 +67,7 @@ public class PetService {
 
     public PetInfoResponseDto findPetById(int petId) {
 
-        Pet pet = petRepository.getOne(Long.valueOf(1));
+        Pet pet = petRepository.getOne(Long.valueOf(petId));
 
         return PetInfoResponseDto.builder()
                 .id(pet.getId())
