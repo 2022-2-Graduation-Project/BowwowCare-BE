@@ -5,11 +5,15 @@ import com.bowwowcare.sm.domain.enums.Gender;
 import com.bowwowcare.sm.domain.pet.Pet;
 import com.bowwowcare.sm.domain.pet.PetRepository;
 import com.bowwowcare.sm.domain.user.MemberRepository;
+import com.bowwowcare.sm.dto.pet.PetListResponseDto;
 import com.bowwowcare.sm.dto.pet.PetRegisterRequestDto;
 import com.bowwowcare.sm.dto.pet.PetRegisterResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+
+import java.util.ArrayList;
+import java.util.List;
 
 @RequiredArgsConstructor
 @Service
@@ -37,5 +41,24 @@ public class PetService {
                 .name(pet.getName())
                 .build();
 
+    }
+
+    public List<PetListResponseDto> findPetListByMember(MemberDetails memberDetails) {
+
+        List<PetListResponseDto> finalPetList = new ArrayList<>();
+
+        Long memId = memberRepository.findByEmail(memberDetails.getUsername()).get().getId();
+        List<Pet> petList = petRepository.findPetListByMember(memId);
+
+        for (Pet pet : petList) {
+            PetListResponseDto p = PetListResponseDto.builder()
+                    .petId(pet.getId())
+                    .name(pet.getName())
+                    .build();
+
+            finalPetList.add(p);
+        }
+
+        return finalPetList;
     }
 }

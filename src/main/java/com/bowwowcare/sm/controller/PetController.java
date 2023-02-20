@@ -12,6 +12,8 @@ import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
@@ -35,5 +37,23 @@ public class PetController {
     public PetRegisterResponseDto registerPet(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails, @RequestBody PetRegisterRequestDto petRegisterRequestDto) {
         PetRegisterResponseDto responseDto = petService.registerPet(petRegisterRequestDto, memberDetails);
         return responseDto;
+    }
+
+
+    @Operation(summary = "반려동물 목록 조회 api", description = "한 유저가 등록한 자신의 반려동물 목록 조회")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @GetMapping("/pets")
+    public ResponseEntity<?> findPetList(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails) {
+        try {
+            return new ResponseEntity<>(petService.findPetListByMember(memberDetails), HttpStatus.OK);
+        }
+        catch (Exception e){
+            return new ResponseEntity<>("오류!", HttpStatus.BAD_REQUEST);
+        }
     }
 }
