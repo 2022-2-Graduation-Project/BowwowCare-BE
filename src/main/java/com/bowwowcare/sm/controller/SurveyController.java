@@ -16,6 +16,8 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @Tag(name = "survey & behavior", description = "문진 API")
 @RequestMapping("/api")
 @RequiredArgsConstructor
@@ -34,10 +36,10 @@ public class SurveyController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping(value = "/v1/survey/aggression", headers = { "Content-type=application/json" })
-    public ResponseEntity<?> findAggressionSurveyResult(@RequestBody AggressionRequestDto aggressionRequestDto) {
+    public ResponseEntity<?> findAggressionSurveyResult(@RequestBody List<AggressionRequestDto> aggressionRequestDtoList) {
         //return new ResponseEntity<>(surveyService.findResult(aggressionRequestDto), HttpStatus.OK);
         try {
-            return new ResponseEntity<>(surveyService.findAggressionResult(aggressionRequestDto), HttpStatus.OK);
+            return new ResponseEntity<>(surveyService.findAggressionResult(aggressionRequestDtoList), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntity<>("인코딩 오류!", HttpStatus.BAD_REQUEST);

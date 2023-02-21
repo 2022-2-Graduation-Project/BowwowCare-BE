@@ -11,11 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AggressionRequestDto {
 
-    private boolean aggression1;
-    private boolean aggression2;
-    private boolean aggression3;
-    private boolean aggression4;
-    private boolean aggression5;
-    private boolean aggression6;
-    private boolean aggression7;
+    private int id;
+    private boolean checked;
 }
