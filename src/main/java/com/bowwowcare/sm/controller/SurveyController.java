@@ -97,4 +97,21 @@ public class SurveyController {
             return new ResponseEntity<>("오류!!", HttpStatus.BAD_REQUEST);
         }
     }
+
+
+    @Operation(summary = "Survey Question api", description = "문진 질문 리스트 가져오기")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @GetMapping("/v1/questions/{type}")
+    public ResponseEntity<?> returnSurveyQuestion(@PathVariable("type") String type) {
+        try {
+            return new ResponseEntity<>(surveyService.selectSurveyQuestion(type), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>("오류!!", HttpStatus.BAD_REQUEST);
+        }
+    }
 }
