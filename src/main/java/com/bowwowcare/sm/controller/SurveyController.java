@@ -16,7 +16,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@Tag(name = "survey", description = "문진 API")
+@Tag(name = "survey & behavior", description = "문진 API")
 @RequestMapping("/api")
 @RequiredArgsConstructor
 @RestController
@@ -77,6 +77,23 @@ public class SurveyController {
             return new ResponseEntity<>(historyService.saveHistory(historyRequestDto), HttpStatus.OK);
         }
         catch (Exception e) {
+            return new ResponseEntity<>("오류!!", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+
+    @Operation(summary = "Aggression Behavior api", description = "공격행동 진단 항목 가져오기")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @GetMapping("/v1/behaviors")
+    public ResponseEntity<?> returnAggressionBehaviorContent() {
+        try {
+            return new ResponseEntity<>(surveyService.selectAggressionBehavior(), HttpStatus.OK);
+        } catch (Exception e) {
             return new ResponseEntity<>("오류!!", HttpStatus.BAD_REQUEST);
         }
     }

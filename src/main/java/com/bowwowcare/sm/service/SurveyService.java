@@ -6,10 +6,7 @@ import com.bowwowcare.sm.domain.survey_result.AggressionResult;
 import com.bowwowcare.sm.domain.survey_result.AggressionResultRepository;
 import com.bowwowcare.sm.domain.survey_result.AnxietyResult;
 import com.bowwowcare.sm.domain.survey_result.AnxietyResultRepository;
-import com.bowwowcare.sm.dto.survey.AggressionRequestDto;
-import com.bowwowcare.sm.dto.survey.AggressionResponseDto;
-import com.bowwowcare.sm.dto.survey.AnxietyRequestDto;
-import com.bowwowcare.sm.dto.survey.AnxietyResponseDto;
+import com.bowwowcare.sm.dto.survey.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -50,6 +47,22 @@ public class SurveyService {
         return aggressionBehaviorRepository.save(aggressionBehavior);
     }
 
+
+    //aggression behavior 항목 전달
+    public List<AggressionBehaviorResponseDto> selectAggressionBehavior() throws UnsupportedEncodingException{
+
+        List<AggressionBehaviorResponseDto> result = new ArrayList<>();
+        for(int i=0; i<aggressionBehaviorRepository.count(); i++){
+            AggressionBehavior agb = aggressionBehaviorRepository.getOne(Long.valueOf(i+1));
+            String content = new String(agb.getContent(), "UTF-8");
+            result.add(AggressionBehaviorResponseDto.builder()
+                    .aggressionId(agb.getId())
+                    .aggressionType(agb.getAggressionType())
+                    .content(content)
+                    .build());
+        }
+        return result;
+    }
 
     //aggression 문진표 결과 반환
     @Transactional
