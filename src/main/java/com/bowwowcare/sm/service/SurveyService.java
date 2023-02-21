@@ -53,6 +53,17 @@ public class SurveyService {
         return aggressionBehaviorRepository.save(aggressionBehavior);
     }
 
+    @Transactional
+    public AggressionQuestion saveAggressionQuestion(AggressionQuestion aggressionQuestion) {
+        return aggressionQuestionRepository.save(aggressionQuestion);
+    }
+
+    //TODO:추가
+    @Transactional
+    public AnxietyQuestion saveAnxietyQuestion(AnxietyQuestion anxietyQuestion) {
+        return anxietyQuestionRepository.save(anxietyQuestion);
+    }
+
 
     //aggression behavior 항목 전달
     public List<AggressionBehaviorResponseDto> selectAggressionBehavior() throws UnsupportedEncodingException{

@@ -1,6 +1,8 @@
 package com.bowwowcare.sm;
 
 import com.bowwowcare.sm.domain.survey.AggressionBehavior;
+import com.bowwowcare.sm.domain.survey_question.AggressionQuestion;
+import com.bowwowcare.sm.domain.survey_question.AnxietyQuestion;
 import com.bowwowcare.sm.domain.survey_result.AggressionResult;
 import com.bowwowcare.sm.domain.survey_result.AnxietyResult;
 import com.bowwowcare.sm.service.SurveyService;
@@ -158,6 +160,79 @@ public class DataInit {
                 AggressionBehavior.builder()
                         .aggressionType(2)
                         .content("달려들기 & 한 번 물기".getBytes())
+                        .build()
+        );
+
+
+        AggressionQuestion aggressionQuestion1 = surveyService.saveAggressionQuestion(
+                AggressionQuestion.builder()
+                        .content("다른 방문자가 왔나요?".getBytes())
+                        .build()
+        );
+        AggressionQuestion aggressionQuestion2 = surveyService.saveAggressionQuestion(
+                AggressionQuestion.builder()
+                        .content("영역에 과도하게 집착하고 있나요?".getBytes())
+                        .build()
+        );
+        AggressionQuestion aggressionQuestion3 = surveyService.saveAggressionQuestion(
+                AggressionQuestion.builder()
+                        .content("가족을 심하게 졸졸 따라다니나요?".getBytes())
+                        .build()
+        );
+        AggressionQuestion aggressionQuestion4 = surveyService.saveAggressionQuestion(
+                AggressionQuestion.builder()
+                        .content("새로운 곳으로 이사하거나 새로운 가족 구성원이 생겼나요?".getBytes())
+                        .build()
+        );
+        AggressionQuestion aggressionQuestion5 = surveyService.saveAggressionQuestion(
+                AggressionQuestion.builder()
+                        .content("보호자가 개의 입에 있는 물건이나 가지고 있는 물건을 강제로 빼앗았나요?".getBytes())
+                        .build()
+        );
+        AggressionQuestion aggressionQuestion6 = surveyService.saveAggressionQuestion(
+                AggressionQuestion.builder()
+                        .content("먹이는 충분하지 않은가요?".getBytes())
+                        .build()
+        );
+        AggressionQuestion aggressionQuestion7 = surveyService.saveAggressionQuestion(
+                AggressionQuestion.builder()
+                        .content("사람이 강아지를 힘으로 통제하였나요?".getBytes())
+                        .build()
+        );
+
+        AnxietyQuestion anxietyQuestion1 = surveyService.saveAnxietyQuestion(
+                AnxietyQuestion.builder()
+                        .content("대소변을 잘 가리지 못하나요?".getBytes())
+                        .build()
+        );
+        AnxietyQuestion anxietyQuestion2 = surveyService.saveAnxietyQuestion(
+                AnxietyQuestion.builder()
+                        .content("지속해서 짖거나 하울링하나요?".getBytes())
+                        .build()
+        );
+        AnxietyQuestion anxietyQuestion3 = surveyService.saveAnxietyQuestion(
+                AnxietyQuestion.builder()
+                        .content("씹기와 같은 파괴적인 행동을 하나요?".getBytes())
+                        .build()
+        );
+        AnxietyQuestion anxietyQuestion4 = surveyService.saveAnxietyQuestion(
+                AnxietyQuestion.builder()
+                        .content("측대보를 하나요?".getBytes())
+                        .build()
+        );
+        AnxietyQuestion anxietyQuestion5 = surveyService.saveAnxietyQuestion(
+                AnxietyQuestion.builder()
+                        .content("물이나 음식을 먹지 않나요?".getBytes())
+                        .build()
+        );
+        AnxietyQuestion anxietyQuestion6 = surveyService.saveAnxietyQuestion(
+                AnxietyQuestion.builder()
+                        .content("자신의 발을 핥거나 상처를 입히나요?".getBytes())
+                        .build()
+        );
+        AnxietyQuestion anxietyQuestion7 = surveyService.saveAnxietyQuestion(
+                AnxietyQuestion.builder()
+                        .content("식분증과 같은 이상행동을 보이나요?".getBytes())
                         .build()
         );
     }
