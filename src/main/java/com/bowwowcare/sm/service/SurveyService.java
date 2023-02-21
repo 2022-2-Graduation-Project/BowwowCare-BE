@@ -2,6 +2,10 @@ package com.bowwowcare.sm.service;
 
 import com.bowwowcare.sm.domain.survey.AggressionBehavior;
 import com.bowwowcare.sm.domain.survey.AggressionBehaviorRepository;
+import com.bowwowcare.sm.domain.survey_question.AggressionQuestion;
+import com.bowwowcare.sm.domain.survey_question.AggressionQuestionRepository;
+import com.bowwowcare.sm.domain.survey_question.AnxietyQuestion;
+import com.bowwowcare.sm.domain.survey_question.AnxietyQuestionRepository;
 import com.bowwowcare.sm.domain.survey_result.AggressionResult;
 import com.bowwowcare.sm.domain.survey_result.AggressionResultRepository;
 import com.bowwowcare.sm.domain.survey_result.AnxietyResult;
@@ -22,6 +26,8 @@ public class SurveyService {
     private final AggressionResultRepository aggressionResultRepository;
     private final AnxietyResultRepository anxietyResultRepository;
     private final AggressionBehaviorRepository aggressionBehaviorRepository;
+    private final AggressionQuestionRepository aggressionQuestionRepository;
+    private final AnxietyQuestionRepository anxietyQuestionRepository;
 
 
     /**
@@ -63,6 +69,34 @@ public class SurveyService {
         }
         return result;
     }
+
+    //survey question 항목 전달
+    public List<SurveyQuestionResponseDto> selectSurveyQuestion(String type) throws UnsupportedEncodingException {
+
+        List<SurveyQuestionResponseDto> result = new ArrayList<>();
+        if(type.equals("aggression")) {
+            for(int i=0; i<aggressionQuestionRepository.count(); i++){
+                AggressionQuestion aq = aggressionQuestionRepository.getOne(Long.valueOf(i+1));
+                String content = new String(aq.getContent(), "UTF-8");
+                result.add(SurveyQuestionResponseDto.builder()
+                        .id(aq.getId())
+                        .content(content)
+                        .build());
+            }
+        }
+        else {
+            for(int i=0; i<anxietyQuestionRepository.count(); i++){
+                AnxietyQuestion aq = anxietyQuestionRepository.getOne(Long.valueOf(i+1));
+                String content = new String(aq.getContent(), "UTF-8");
+                result.add(SurveyQuestionResponseDto.builder()
+                        .id(aq.getId())
+                        .content(content)
+                        .build());
+            }
+        }
+        return result;
+    }
+
 
     //aggression 문진표 결과 반환
     @Transactional
