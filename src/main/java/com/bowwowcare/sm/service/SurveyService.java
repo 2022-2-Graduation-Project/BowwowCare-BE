@@ -1,5 +1,7 @@
 package com.bowwowcare.sm.service;
 
+import com.bowwowcare.sm.domain.survey.AggressionBehavior;
+import com.bowwowcare.sm.domain.survey.AggressionBehaviorRepository;
 import com.bowwowcare.sm.domain.survey_result.AggressionResult;
 import com.bowwowcare.sm.domain.survey_result.AggressionResultRepository;
 import com.bowwowcare.sm.domain.survey_result.AnxietyResult;
@@ -22,6 +24,8 @@ public class SurveyService {
 
     private final AggressionResultRepository aggressionResultRepository;
     private final AnxietyResultRepository anxietyResultRepository;
+    private final AggressionBehaviorRepository aggressionBehaviorRepository;
+
 
     /**
      * aggression 문진 응답에 따른 situation, solution 저장 위한 메서드
@@ -39,6 +43,11 @@ public class SurveyService {
     @Transactional
     public AnxietyResult save_anxiety(AnxietyResult anxietyResult) {
         return anxietyResultRepository.save(anxietyResult);
+    }
+
+    @Transactional
+    public AggressionBehavior save_aggression_behavior(AggressionBehavior aggressionBehavior) {
+        return aggressionBehaviorRepository.save(aggressionBehavior);
     }
 
 

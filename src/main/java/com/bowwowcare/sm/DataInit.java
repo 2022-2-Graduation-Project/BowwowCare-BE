@@ -1,5 +1,6 @@
 package com.bowwowcare.sm;
 
+import com.bowwowcare.sm.domain.survey.AggressionBehavior;
 import com.bowwowcare.sm.domain.survey_result.AggressionResult;
 import com.bowwowcare.sm.domain.survey_result.AnxietyResult;
 import com.bowwowcare.sm.service.SurveyService;
@@ -92,5 +93,72 @@ public class DataInit {
                         .build()
         );
 
+
+        AggressionBehavior aggressionBehavior1 = surveyService.save_aggression_behavior(
+                AggressionBehavior.builder()
+                        .aggressionType(0)
+                        .content("헐떡이며 숨쉬기".getBytes())
+                        .build()
+        );
+        AggressionBehavior aggressionBehavior2 = surveyService.save_aggression_behavior(
+                AggressionBehavior.builder()
+                        .aggressionType(0)
+                        .content("동공확장".getBytes())
+                        .build()
+        );
+        AggressionBehavior aggressionBehavior3 = surveyService.save_aggression_behavior(
+                AggressionBehavior.builder()
+                        .aggressionType(0)
+                        .content("몸 떨기".getBytes())
+                        .build()
+        );
+        AggressionBehavior aggressionBehavior4 = surveyService.save_aggression_behavior(
+                AggressionBehavior.builder()
+                        .aggressionType(0)
+                        .content("털 세우기".getBytes())
+                        .build()
+        );
+        AggressionBehavior aggressionBehavior5 = surveyService.save_aggression_behavior(
+                AggressionBehavior.builder()
+                        .aggressionType(1)
+                        .content("입 다물기".getBytes())
+                        .build()
+        );
+        AggressionBehavior aggressionBehavior6 = surveyService.save_aggression_behavior(
+                AggressionBehavior.builder()
+                        .aggressionType(1)
+                        .content("경직되기".getBytes())
+                        .build()
+        );
+        AggressionBehavior aggressionBehavior7 = surveyService.save_aggression_behavior(
+                AggressionBehavior.builder()
+                        .aggressionType(1)
+                        .content("짖기".getBytes())
+                        .build()
+        );
+        AggressionBehavior aggressionBehavior8 = surveyService.save_aggression_behavior(
+                AggressionBehavior.builder()
+                        .aggressionType(1)
+                        .content("응시하기".getBytes())
+                        .build()
+        );
+        AggressionBehavior aggressionBehavior9 = surveyService.save_aggression_behavior(
+                AggressionBehavior.builder()
+                        .aggressionType(2)
+                        .content("이빨 보이기".getBytes())
+                        .build()
+        );
+        AggressionBehavior aggressionBehavior10 = surveyService.save_aggression_behavior(
+                AggressionBehavior.builder()
+                        .aggressionType(2)
+                        .content("도망/철수".getBytes())
+                        .build()
+        );
+        AggressionBehavior aggressionBehavior11 = surveyService.save_aggression_behavior(
+                AggressionBehavior.builder()
+                        .aggressionType(2)
+                        .content("달려들기 & 한 번 물기".getBytes())
+                        .build()
+        );
     }
 }
