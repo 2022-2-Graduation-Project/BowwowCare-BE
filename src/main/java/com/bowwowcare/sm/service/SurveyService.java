@@ -129,36 +129,26 @@ public class SurveyService {
     }
 
     //anxiety 문진표 결과 반환
-    public List<AnxietyResponseDto> findAnxietyResult(AnxietyRequestDto anxietyRequestDto) throws UnsupportedEncodingException{
+    public List<AnxietyResponseDto> findAnxietyResult(List<AnxietyRequestDto> anxietyRequestDtoList) throws UnsupportedEncodingException{
 
         List<AnxietyResponseDto> final_result = new ArrayList<>();
 
-        if(anxietyRequestDto.isAnxiety1())
-            final_result = makeList();
-        else if(anxietyRequestDto.isAnxiety2())
-            final_result = makeList();
-        else if(anxietyRequestDto.isAnxiety3())
-            final_result = makeList();
-        else if(anxietyRequestDto.isAnxiety4())
-            final_result = makeList();
-        else if(anxietyRequestDto.isAnxiety5())
-            final_result = makeList();
-        else if(anxietyRequestDto.isAnxiety6())
-            final_result = makeList();
-        else if(anxietyRequestDto.isAnxiety7())
-            final_result = makeList();
-        else {
+        for(int i=0; i<anxietyRequestDtoList.size(); i++){
+            if(anxietyRequestDtoList.get(i).isChecked()){
+                final_result = makeList();
+                break;
+            }
             List<AnxietyResponseDto> exception = new ArrayList<>();
-            String s1 = new String(anxietyResultRepository.getOne(Long.valueOf(4)).getSituation(), "UTF-8");
-            String s2 = new String(anxietyResultRepository.getOne(Long.valueOf(4)).getSolution1(), "UTF-8");
+            String s1 = new String(anxietyResultRepository.getOne(4L).getSituation(), "UTF-8");
+            String s2 = new String(anxietyResultRepository.getOne(4L).getSolution1(), "UTF-8");
             List<String> s = new ArrayList<>();
             s.add(s2);
-            AnxietyResponseDto a = save_anxietyResult(Long.valueOf(4), s1, s);
+            AnxietyResponseDto a = save_anxietyResult(4L, s1, s);
             exception.add(a);
             final_result = exception;
         }
-
         return final_result;
+
     }
 
     private AggressionResponseDto save_aggressionResult(Long id, String situation, String solution) {

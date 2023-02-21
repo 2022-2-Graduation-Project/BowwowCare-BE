@@ -55,10 +55,10 @@ public class SurveyController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping(value = "/v1/survey/anxiety", headers = { "Content-type=application/json" })
-    public ResponseEntity<?> findAnxietySurveyResult(@RequestBody AnxietyRequestDto anxietyRequestDto) {
+    public ResponseEntity<?> findAnxietySurveyResult(@RequestBody List<AnxietyRequestDto> anxietyRequestDtoList) {
         //return new ResponseEntity<>(surveyService.findResult(aggressionRequestDto), HttpStatus.OK);
         try {
-            return new ResponseEntity<>(surveyService.findAnxietyResult(anxietyRequestDto), HttpStatus.OK);
+            return new ResponseEntity<>(surveyService.findAnxietyResult(anxietyRequestDtoList), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntity<>("인코딩 오류!", HttpStatus.BAD_REQUEST);

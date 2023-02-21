@@ -11,11 +11,6 @@ import lombok.NoArgsConstructor;
 @Builder
 public class AnxietyRequestDto {
 
-    private boolean anxiety1;
-    private boolean anxiety2;
-    private boolean anxiety3;
-    private boolean anxiety4;
-    private boolean anxiety5;
-    private boolean anxiety6;
-    private boolean anxiety7;
+    private int id;
+    private boolean checked;
 }
