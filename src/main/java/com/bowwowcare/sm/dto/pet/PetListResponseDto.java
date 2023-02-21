@@ -12,5 +12,6 @@ import lombok.NoArgsConstructor;
 public class PetListResponseDto {
 
     private Long petId;
-    private String name;
+    private String petName;
+    private String petImage;
 }

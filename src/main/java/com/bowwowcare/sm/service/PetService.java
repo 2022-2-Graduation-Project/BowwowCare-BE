@@ -55,7 +55,8 @@ public class PetService {
         for (Pet pet : petList) {
             PetListResponseDto p = PetListResponseDto.builder()
                     .petId(pet.getId())
-                    .name(pet.getName())
+                    .petName(pet.getName())
+                    .petImage(pet.getPetImg())
                     .build();
 
             finalPetList.add(p);
