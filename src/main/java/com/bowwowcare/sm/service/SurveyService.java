@@ -16,6 +16,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -70,8 +71,8 @@ public class SurveyService {
 
         List<AggressionBehaviorResponseDto> result = new ArrayList<>();
         for(int i=0; i<aggressionBehaviorRepository.count(); i++){
-            AggressionBehavior agb = aggressionBehaviorRepository.getOne(Long.valueOf(i+1));
-            String content = new String(agb.getContent(), "UTF-8");
+            AggressionBehavior agb = aggressionBehaviorRepository.getOne((long) (i + 1));
+            String content = new String(agb.getContent(), StandardCharsets.UTF_8);
             result.add(AggressionBehaviorResponseDto.builder()
                     .aggressionId(agb.getId())
                     .aggressionType(agb.getAggressionType())
@@ -87,8 +88,8 @@ public class SurveyService {
         List<SurveyQuestionResponseDto> result = new ArrayList<>();
         if(type.equals("aggression")) {
             for(int i=0; i<aggressionQuestionRepository.count(); i++){
-                AggressionQuestion aq = aggressionQuestionRepository.getOne(Long.valueOf(i+1));
-                String content = new String(aq.getContent(), "UTF-8");
+                AggressionQuestion aq = aggressionQuestionRepository.getOne((long) (i + 1));
+                String content = new String(aq.getContent(), StandardCharsets.UTF_8);
                 result.add(SurveyQuestionResponseDto.builder()
                         .id(aq.getId())
                         .content(content)
@@ -97,8 +98,8 @@ public class SurveyService {
         }
         else {
             for(int i=0; i<anxietyQuestionRepository.count(); i++){
-                AnxietyQuestion aq = anxietyQuestionRepository.getOne(Long.valueOf(i+1));
-                String content = new String(aq.getContent(), "UTF-8");
+                AnxietyQuestion aq = anxietyQuestionRepository.getOne((long) (i + 1));
+                String content = new String(aq.getContent(), StandardCharsets.UTF_8);
                 result.add(SurveyQuestionResponseDto.builder()
                         .id(aq.getId())
                         .content(content)
@@ -118,8 +119,8 @@ public class SurveyService {
         for(int i=0; i<aggressionRequestDtoList.size(); i++) {
             int x = aggressionRequestDtoList.get(i).getId();
             if(aggressionRequestDtoList.get(i).isChecked()) {
-                String situation = new String(aggressionResultRepository.getOne((long) x).getSituation(), "UTF-8");
-                String solution = new String(aggressionResultRepository.getOne((long) x).getSolution(), "UTF-8");
+                String situation = new String(aggressionResultRepository.getOne((long) x).getSituation(), StandardCharsets.UTF_8);
+                String solution = new String(aggressionResultRepository.getOne((long) x).getSolution(), StandardCharsets.UTF_8);
                 AggressionResponseDto ag = save_aggressionResult((long) x, situation, solution);
                 result.add(ag);
             }
@@ -139,8 +140,8 @@ public class SurveyService {
                 break;
             }
             List<AnxietyResponseDto> exception = new ArrayList<>();
-            String s1 = new String(anxietyResultRepository.getOne(4L).getSituation(), "UTF-8");
-            String s2 = new String(anxietyResultRepository.getOne(4L).getSolution1(), "UTF-8");
+            String s1 = new String(anxietyResultRepository.getOne(4L).getSituation(), StandardCharsets.UTF_8);
+            String s2 = new String(anxietyResultRepository.getOne(4L).getSolution1(), StandardCharsets.UTF_8);
             List<String> s = new ArrayList<>();
             s.add(s2);
             AnxietyResponseDto a = save_anxietyResult(4L, s1, s);
@@ -171,31 +172,31 @@ public class SurveyService {
 
         List<AnxietyResponseDto> result = new ArrayList<>();
 
-        String situation1 = new String(anxietyResultRepository.getOne(Long.valueOf(1)).getSituation(), "UTF-8");
-        String solution1_1 = new String(anxietyResultRepository.getOne(Long.valueOf(1)).getSolution1(), "UTF-8");
-        String solution1_2 = new String(anxietyResultRepository.getOne(Long.valueOf(1)).getSolution2(), "UTF-8");
+        String situation1 = new String(anxietyResultRepository.getOne(1L).getSituation(), StandardCharsets.UTF_8);
+        String solution1_1 = new String(anxietyResultRepository.getOne(1L).getSolution1(), StandardCharsets.UTF_8);
+        String solution1_2 = new String(anxietyResultRepository.getOne(1L).getSolution2(), StandardCharsets.UTF_8);
         List<String> sol1 = new ArrayList<>();
         sol1.add(solution1_1);
         sol1.add(solution1_2);
-        AnxietyResponseDto an1 = save_anxietyResult(Long.valueOf(1), situation1, sol1);
+        AnxietyResponseDto an1 = save_anxietyResult(1L, situation1, sol1);
         result.add(an1);
 
-        String situation2 = new String(anxietyResultRepository.getOne(Long.valueOf(2)).getSituation(), "UTF-8");
-        String solution2_1 = new String(anxietyResultRepository.getOne(Long.valueOf(2)).getSolution1(), "UTF-8");
-        String solution2_2 = new String(anxietyResultRepository.getOne(Long.valueOf(2)).getSolution2(), "UTF-8");
-        String solution2_3 = new String(anxietyResultRepository.getOne(Long.valueOf(2)).getSolution3(), "UTF-8");
+        String situation2 = new String(anxietyResultRepository.getOne(2L).getSituation(), StandardCharsets.UTF_8);
+        String solution2_1 = new String(anxietyResultRepository.getOne(2L).getSolution1(), StandardCharsets.UTF_8);
+        String solution2_2 = new String(anxietyResultRepository.getOne(2L).getSolution2(), StandardCharsets.UTF_8);
+        String solution2_3 = new String(anxietyResultRepository.getOne(2L).getSolution3(), StandardCharsets.UTF_8);
         List<String> sol2 = new ArrayList<>();
         sol2.add(solution2_1);
         sol2.add(solution2_2);
         sol2.add(solution2_3);
-        AnxietyResponseDto an2 = save_anxietyResult(Long.valueOf(2), situation2, sol2);
+        AnxietyResponseDto an2 = save_anxietyResult(2L, situation2, sol2);
         result.add(an2);
 
-        String situation3 = new String(anxietyResultRepository.getOne(Long.valueOf(3)).getSituation(), "UTF-8");
-        String solution3_1 = new String(anxietyResultRepository.getOne(Long.valueOf(3)).getSolution1(), "UTF-8");
+        String situation3 = new String(anxietyResultRepository.getOne(3L).getSituation(), StandardCharsets.UTF_8);
+        String solution3_1 = new String(anxietyResultRepository.getOne(3L).getSolution1(), StandardCharsets.UTF_8);
         List<String> sol3 = new ArrayList<>();
         sol3.add(solution3_1);
-        AnxietyResponseDto an3 = save_anxietyResult(Long.valueOf(3), situation3, sol3);
+        AnxietyResponseDto an3 = save_anxietyResult(3L, situation3, sol3);
         result.add(an3);
 
         return result;
