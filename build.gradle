@@ -49,6 +49,9 @@ dependencies {
     runtime 'io.jsonwebtoken:jjwt-impl:0.10.7' // JWT
     testImplementation 'org.springframework.security:spring-security-test'
 
+    //s3사진 업로드
+    implementation('org.springframework.cloud:spring-cloud-starter-aws:2.2.6.RELEASE')
+
     testImplementation('org.springframework.boot:spring-boot-starter-test')
 
 }
