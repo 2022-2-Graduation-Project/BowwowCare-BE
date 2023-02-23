@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -30,7 +31,7 @@ public class PetService {
                 Pet.builder()
                         .name(petRegisterRequestDto.getName())
                         .gender(Gender.valueOf(petRegisterRequestDto.getGender().toUpperCase()))
-                        .petImg(petRegisterRequestDto.getPetImg())
+                        .petImage(petRegisterRequestDto.getPetImg().getBytes())
                         .birthDate(petRegisterRequestDto.getBirthDate())
                         .adoptonDate(petRegisterRequestDto.getAdoptionDate())
                         .member(memberRepository.findByEmail(memberDetails.getUsername()).get())
@@ -56,7 +57,7 @@ public class PetService {
             PetListResponseDto p = PetListResponseDto.builder()
                     .petId(pet.getId())
                     .petName(pet.getName())
-                    .petImage(pet.getPetImg())
+                    .petImage(new String(pet.getPetImage(), StandardCharsets.UTF_8))
                     .build();
 
             finalPetList.add(p);
@@ -73,7 +74,7 @@ public class PetService {
         return PetInfoResponseDto.builder()
                 .id(pet.getId())
                 .name(pet.getName())
-                .petImg(pet.getPetImg())
+                .petImg(new String(pet.getPetImage(), StandardCharsets.UTF_8))
                 .gender(pet.getGender().toString())
                 .birthDate(pet.getBirthDate())
                 .adoptionDate(pet.getAdoptionDate())

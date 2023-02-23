@@ -32,7 +32,9 @@ public class Pet {
     @Column(nullable = false)
     private Gender gender;
 
-    private String petImg;
+    @Lob
+    @Column
+    private byte[] petImage;
 
     private LocalDate birthDate;
 
@@ -46,11 +48,11 @@ public class Pet {
     private Stastus stastus = Stastus.ACTIVE;*/
 
     @Builder
-    public Pet(String name, Gender gender, String petImg, LocalDate birthDate, LocalDate adoptonDate, Member member) {
+    public Pet(String name, Gender gender, byte[] petImage, LocalDate birthDate, LocalDate adoptonDate, Member member) {
 
         this.name = name;
         this.gender = gender;
-        this.petImg = petImg;
+        this.petImage = petImage;
         this.birthDate = birthDate;
         this.adoptionDate = adoptonDate;
         this.member = member;
