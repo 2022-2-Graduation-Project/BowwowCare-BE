@@ -13,6 +13,10 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 @SpringBootApplication
 public class BowwowCareApplication {
 
+	static {
+		System.setProperty("com.amazonaws.sdk.disableEc2Metadata", "true");
+	}
+
 	public static void main(String[] args) {
 		SpringApplication.run(BowwowCareApplication.class, args);
 	}
