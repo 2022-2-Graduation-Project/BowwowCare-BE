@@ -1,8 +1,8 @@
 package com.bowwowcare.sm.service;
 
 import com.bowwowcare.sm.domain.enums.Type;
-import com.bowwowcare.sm.domain.history.History;
-import com.bowwowcare.sm.domain.history.HistoryRepository;
+import com.bowwowcare.sm.domain.history.AnxietyHistory;
+import com.bowwowcare.sm.domain.history.AnxietyHistoryRepository;
 import com.bowwowcare.sm.domain.pet.PetRepository;
 import com.bowwowcare.sm.dto.history.HistoryRequestDto;
 import com.bowwowcare.sm.dto.history.HistoryResponseDto;
@@ -16,32 +16,32 @@ import java.util.List;
 @Service
 public class HistoryService {
 
-    private final HistoryRepository historyRepository;
+    private final AnxietyHistoryRepository anxietyHistoryRepository;
     private final PetRepository petRepository;
 
     public List<HistoryResponseDto> saveHistory(HistoryRequestDto historyRequestDto) {
 
-        List<History> historyList = new ArrayList<>();
+        List<AnxietyHistory> anxietyHistoryList = new ArrayList<>();
         for(int i=0; i<historyRequestDto.getSituation().size(); i++){
             int x = historyRequestDto.getPetId();
-            History history = historyRepository.save(
-                    History.builder()
+            AnxietyHistory anxietyHistory = anxietyHistoryRepository.save(
+                    AnxietyHistory.builder()
                             .type(Type.valueOf(historyRequestDto.getType().toUpperCase()))
                             .situation(historyRequestDto.getSituation().get(i).intValue())
                             .createdDate(historyRequestDto.getCreatedDate())
                             .pet(petRepository.getOne(Long.valueOf(x)))
                             .build()
             );
-            historyList.add(history);
+            anxietyHistoryList.add(anxietyHistory);
         }
 
         List<HistoryResponseDto> resultList = new ArrayList<>();
-        for(int i=0; i<historyList.size(); i++){
+        for(int i = 0; i< anxietyHistoryList.size(); i++){
             HistoryResponseDto result = HistoryResponseDto.builder()
-                    .id(historyList.get(i).getId())
-                    .type(historyList.get(i).getType().toString())
-                    .situation(historyList.get(i).getSituation())
-                    .petId(historyList.get(i).getPet().getId())
+                    .id(anxietyHistoryList.get(i).getId())
+                    .type(anxietyHistoryList.get(i).getType().toString())
+                    .situation(anxietyHistoryList.get(i).getSituation())
+                    .petId(anxietyHistoryList.get(i).getPet().getId())
                     .build();
 
             resultList.add(result);

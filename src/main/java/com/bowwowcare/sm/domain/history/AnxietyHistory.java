@@ -1,6 +1,5 @@
 package com.bowwowcare.sm.domain.history;
 
-import com.bowwowcare.sm.domain.BaseTimeEntity;
 import com.bowwowcare.sm.domain.enums.Type;
 import com.bowwowcare.sm.domain.pet.Pet;
 import lombok.Builder;
@@ -13,7 +12,8 @@ import java.time.LocalDate;
 @Getter
 @NoArgsConstructor
 @Entity
-public class History {
+@Table(name = "anxiety_history")
+public class AnxietyHistory {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -36,7 +36,7 @@ public class History {
     private Pet pet;
 
     @Builder
-    public History(Type type, int situation, LocalDate createdDate, Pet pet){
+    public AnxietyHistory(Type type, int situation, LocalDate createdDate, Pet pet){
         this.type = type;
         this.situation = situation;
         this.createdDate = createdDate;
