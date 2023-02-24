@@ -29,7 +29,7 @@ public class HistoryController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @PostMapping(value = "/v1/survey/result", headers = { "Content-type=application/json" })
+    @PostMapping(value = "/survey/result/anxiety", headers = { "Content-type=application/json" })
     public ResponseEntity<?> saveSurveyResult(@RequestBody AnxietyHistoryRequestDto anxietyHistoryRequestDto) {
         try {
             return new ResponseEntity<>(historyService.saveAnxietyHistory(anxietyHistoryRequestDto), HttpStatus.OK);
