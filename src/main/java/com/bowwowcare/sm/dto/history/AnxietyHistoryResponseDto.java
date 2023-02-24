@@ -5,6 +5,8 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.util.List;
+
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
@@ -12,7 +14,6 @@ import lombok.NoArgsConstructor;
 public class AnxietyHistoryResponseDto {
 
     private Long id;
-    private String type;
-    private int situation;
+    private List<Integer> situation;
     private Long petId;
 }

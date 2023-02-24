@@ -15,8 +15,6 @@ import java.util.List;
 @Builder
 public class AnxietyHistoryRequestDto {
 
-    private String type;
-
     private List<Integer> situation;
 
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd", timezone = "Asia/Seoul")
