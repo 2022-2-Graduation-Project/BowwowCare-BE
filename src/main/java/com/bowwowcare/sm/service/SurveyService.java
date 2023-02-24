@@ -36,7 +36,7 @@ public class SurveyService {
      * DataInit
      */
     @Transactional
-    public AggressionResult save_aggression(AggressionResult aggressionResult) {
+    public AggressionResult saveAggression(AggressionResult aggressionResult) {
         return aggressionResultRepository.save(aggressionResult);
     }
 
@@ -45,12 +45,12 @@ public class SurveyService {
      * DataInit
      */
     @Transactional
-    public AnxietyResult save_anxiety(AnxietyResult anxietyResult) {
+    public AnxietyResult saveAnxiety(AnxietyResult anxietyResult) {
         return anxietyResultRepository.save(anxietyResult);
     }
 
     @Transactional
-    public AggressionBehavior save_aggression_behavior(AggressionBehavior aggressionBehavior) {
+    public AggressionBehavior saveAggressionBehavior(AggressionBehavior aggressionBehavior) {
         return aggressionBehaviorRepository.save(aggressionBehavior);
     }
 
@@ -121,7 +121,7 @@ public class SurveyService {
             if(aggressionRequestDtoList.get(i).isChecked()) {
                 String situation = new String(aggressionResultRepository.getOne((long) x).getSituation(), StandardCharsets.UTF_8);
                 String solution = new String(aggressionResultRepository.getOne((long) x).getSolution(), StandardCharsets.UTF_8);
-                AggressionResponseDto ag = save_aggressionResult((long) x, situation, solution);
+                AggressionResponseDto ag = saveAggressionResult((long) x, situation, solution);
                 result.add(ag);
             }
         }
@@ -144,7 +144,7 @@ public class SurveyService {
             String s2 = new String(anxietyResultRepository.getOne(4L).getSolution1(), StandardCharsets.UTF_8);
             List<String> s = new ArrayList<>();
             s.add(s2);
-            AnxietyResponseDto a = save_anxietyResult(4L, s1, s);
+            AnxietyResponseDto a = saveAnxietyResult(4L, s1, s);
             exception.add(a);
             final_result = exception;
         }
@@ -152,7 +152,7 @@ public class SurveyService {
 
     }
 
-    private AggressionResponseDto save_aggressionResult(Long id, String situation, String solution) {
+    private AggressionResponseDto saveAggressionResult(Long id, String situation, String solution) {
         AggressionResponseDto ag = new AggressionResponseDto();
         ag.setId(id);
         ag.setSituation(situation);
@@ -160,7 +160,7 @@ public class SurveyService {
         return ag;
     }
 
-    private AnxietyResponseDto save_anxietyResult(Long id, String situation, List<String> solution) {
+    private AnxietyResponseDto saveAnxietyResult(Long id, String situation, List<String> solution) {
         AnxietyResponseDto an = new AnxietyResponseDto();
         an.setId(id);
         an.setSituation(situation);
@@ -178,7 +178,7 @@ public class SurveyService {
         List<String> sol1 = new ArrayList<>();
         sol1.add(solution1_1);
         sol1.add(solution1_2);
-        AnxietyResponseDto an1 = save_anxietyResult(1L, situation1, sol1);
+        AnxietyResponseDto an1 = saveAnxietyResult(1L, situation1, sol1);
         result.add(an1);
 
         String situation2 = new String(anxietyResultRepository.getOne(2L).getSituation(), StandardCharsets.UTF_8);
@@ -189,14 +189,14 @@ public class SurveyService {
         sol2.add(solution2_1);
         sol2.add(solution2_2);
         sol2.add(solution2_3);
-        AnxietyResponseDto an2 = save_anxietyResult(2L, situation2, sol2);
+        AnxietyResponseDto an2 = saveAnxietyResult(2L, situation2, sol2);
         result.add(an2);
 
         String situation3 = new String(anxietyResultRepository.getOne(3L).getSituation(), StandardCharsets.UTF_8);
         String solution3_1 = new String(anxietyResultRepository.getOne(3L).getSolution1(), StandardCharsets.UTF_8);
         List<String> sol3 = new ArrayList<>();
         sol3.add(solution3_1);
-        AnxietyResponseDto an3 = save_anxietyResult(3L, situation3, sol3);
+        AnxietyResponseDto an3 = saveAnxietyResult(3L, situation3, sol3);
         result.add(an3);
 
         return result;

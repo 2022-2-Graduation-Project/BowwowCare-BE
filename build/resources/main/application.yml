@@ -17,3 +17,23 @@ spring:
 
   jwt:
     secretKey: bow-wow-care
+
+cloud:
+  aws:
+    s3:
+      bucket: bowwowcarebucket
+    credentials:
+      access-key: AKIAR7CTKROR4SKEXVEW
+      secret-key: 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
+    region:
+      static: ap-northeast-2
+      auto: false
+    stack:
+      auto: false
+
+logging:
+  level:
+    com:
+      amazonaws:
+        util:
+          com.amazonaws.util.EC2MetadataUtils: ERROR
