@@ -13,7 +13,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class HistoryRequestDto {
+public class AnxietyHistoryRequestDto {
 
     private String type;
 

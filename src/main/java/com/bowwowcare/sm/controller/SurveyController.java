@@ -1,6 +1,6 @@
 package com.bowwowcare.sm.controller;
 
-import com.bowwowcare.sm.dto.history.HistoryRequestDto;
+import com.bowwowcare.sm.dto.history.AnxietyHistoryRequestDto;
 import com.bowwowcare.sm.dto.survey.AggressionRequestDto;
 import com.bowwowcare.sm.dto.survey.AnxietyRequestDto;
 import com.bowwowcare.sm.service.HistoryService;
@@ -68,15 +68,15 @@ public class SurveyController {
 
     @Operation(summary = "문진 결과 저장 api", description = "문진표 작성 후 상황별 솔루션 쌍을 반려견 별로 저장")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = HistoryRequestDto.class))),
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AnxietyHistoryRequestDto.class))),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping(value = "/v1/survey/result", headers = { "Content-type=application/json" })
-    public ResponseEntity<?> saveSurveyResult(@RequestBody HistoryRequestDto historyRequestDto) {
+    public ResponseEntity<?> saveSurveyResult(@RequestBody AnxietyHistoryRequestDto anxietyHistoryRequestDto) {
         try {
-            return new ResponseEntity<>(historyService.saveHistory(historyRequestDto), HttpStatus.OK);
+            return new ResponseEntity<>(historyService.saveHistory(anxietyHistoryRequestDto), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntity<>("오류!!", HttpStatus.BAD_REQUEST);
