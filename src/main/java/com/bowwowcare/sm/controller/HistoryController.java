@@ -1,5 +1,6 @@
 package com.bowwowcare.sm.controller;
 
+import com.bowwowcare.sm.dto.history.AggressionHistoryRequestDto;
 import com.bowwowcare.sm.dto.history.AnxietyHistoryRequestDto;
 import com.bowwowcare.sm.service.HistoryService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -36,6 +37,23 @@ public class HistoryController {
         }
         catch (Exception e) {
             return new ResponseEntity<>("오류!!", HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "공격행동 문진 결과 저장 api", description = "문진표 작성 후 상황별 솔루션 쌍을 반려견 별로 저장")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AggressionHistoryRequestDto.class))),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @PostMapping(value = "/survey/result/aggression", headers = { "Content-type=application/json" })
+    public ResponseEntity<?> saveAggressionSurveyResult(@RequestBody AggressionHistoryRequestDto aggressionHistoryRequestDto) {
+        try {
+            return new ResponseEntity<>(historyService.saveAggressionHistory(aggressionHistoryRequestDto), HttpStatus.OK);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(historyService.saveAggressionHistory(aggressionHistoryRequestDto), HttpStatus.BAD_REQUEST);
         }
     }
 }
