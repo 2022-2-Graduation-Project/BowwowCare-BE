@@ -76,7 +76,7 @@ public class SurveyController {
     @PostMapping(value = "/v1/survey/result", headers = { "Content-type=application/json" })
     public ResponseEntity<?> saveSurveyResult(@RequestBody AnxietyHistoryRequestDto anxietyHistoryRequestDto) {
         try {
-            return new ResponseEntity<>(historyService.saveHistory(anxietyHistoryRequestDto), HttpStatus.OK);
+            return new ResponseEntity<>(historyService.saveAnxietyHistory(anxietyHistoryRequestDto), HttpStatus.OK);
         }
         catch (Exception e) {
             return new ResponseEntity<>("오류!!", HttpStatus.BAD_REQUEST);
