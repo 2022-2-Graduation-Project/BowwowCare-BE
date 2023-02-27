@@ -13,6 +13,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 @RequiredArgsConstructor
@@ -27,7 +28,9 @@ public class HistoryService {
     public AnxietyHistoryResponseDto saveAnxietyHistory(AnxietyHistoryRequestDto anxietyHistoryRequestDto) {
 
 
-        List<Boolean> situationList = findRequestSituationList(anxietyHistoryRequestDto.getSituation());
+        List<Integer> list = anxietyHistoryRequestDto.getSituation();
+        Collections.sort(list);
+        List<Boolean> situationList = findRequestSituationList(list);
 
         int x = anxietyHistoryRequestDto.getPetId();
         AnxietyHistory anxietyHistory = AnxietyHistory.builder()
@@ -124,7 +127,9 @@ public class HistoryService {
 
     public AggressionHistoryResponseDto saveAggressionHistory(AggressionHistoryRequestDto aggressionHistoryRequestDto) {
 
-        List<Boolean> situationList = findRequestSituationList(aggressionHistoryRequestDto.getSituation());
+        List<Integer> list = aggressionHistoryRequestDto.getSituation();
+        Collections.sort(list);
+        List<Boolean> situationList = findRequestSituationList(list);
 
         int x = aggressionHistoryRequestDto.getPetId();
         AggressionHistory aggressionHistory = AggressionHistory.builder()
