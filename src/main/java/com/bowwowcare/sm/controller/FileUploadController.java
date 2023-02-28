@@ -1,15 +1,18 @@
 package com.bowwowcare.sm.controller;
 
+import com.bowwowcare.sm.config.security.member.MemberDetails;
 import com.bowwowcare.sm.dto.file.FileResponseDto;
 import com.bowwowcare.sm.dto.survey.AnxietyRequestDto;
 import com.bowwowcare.sm.service.FileUploadService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -32,7 +35,7 @@ public class FileUploadController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping(value = "/image")
-    public FileResponseDto uploadFile(@RequestParam MultipartFile file)
+    public FileResponseDto uploadFile(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails, @RequestParam MultipartFile file)
             throws IOException {
         return fileUploadService.saveUploadFile(file);
     }
