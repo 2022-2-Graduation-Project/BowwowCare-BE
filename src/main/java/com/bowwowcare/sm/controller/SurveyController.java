@@ -26,7 +26,6 @@ import java.util.List;
 public class SurveyController {
 
     private final SurveyService surveyService;
-    private final HistoryService historyService;
 
     @Operation(summary = "공격행동 문진표 api", description = "문진표 작성 후 상황별 솔루션 반환 - 공격행동")
     @ApiResponses({
@@ -56,7 +55,6 @@ public class SurveyController {
     })
     @PostMapping(value = "/v1/survey/anxiety", headers = { "Content-type=application/json" })
     public ResponseEntity<?> findAnxietySurveyResult(@RequestBody List<AnxietyRequestDto> anxietyRequestDtoList) {
-        //return new ResponseEntity<>(surveyService.findResult(aggressionRequestDto), HttpStatus.OK);
         try {
             return new ResponseEntity<>(surveyService.findAnxietyResult(anxietyRequestDtoList), HttpStatus.OK);
         }
