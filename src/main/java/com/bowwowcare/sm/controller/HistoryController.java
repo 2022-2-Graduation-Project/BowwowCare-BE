@@ -1,9 +1,11 @@
 package com.bowwowcare.sm.controller;
 
+import com.bowwowcare.sm.config.security.member.MemberDetails;
 import com.bowwowcare.sm.dto.history.AggressionHistoryRequestDto;
 import com.bowwowcare.sm.dto.history.AnxietyHistoryRequestDto;
 import com.bowwowcare.sm.service.HistoryService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -12,6 +14,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 @Tag(name = "history", description = "문진 결과 저장 API")
@@ -31,7 +34,7 @@ public class HistoryController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping(value = "/survey/result/anxiety", headers = { "Content-type=application/json" })
-    public ResponseEntity<?> saveSurveyResult(@RequestBody AnxietyHistoryRequestDto anxietyHistoryRequestDto) {
+    public ResponseEntity<?> saveSurveyResult(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails, @RequestBody AnxietyHistoryRequestDto anxietyHistoryRequestDto) {
         try {
             return new ResponseEntity<>(historyService.saveAnxietyHistory(anxietyHistoryRequestDto), HttpStatus.OK);
         }
@@ -48,7 +51,7 @@ public class HistoryController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping(value = "/survey/result/aggression", headers = { "Content-type=application/json" })
-    public ResponseEntity<?> saveAggressionSurveyResult(@RequestBody AggressionHistoryRequestDto aggressionHistoryRequestDto) {
+    public ResponseEntity<?> saveAggressionSurveyResult(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails, @RequestBody AggressionHistoryRequestDto aggressionHistoryRequestDto) {
         try {
             return new ResponseEntity<>(historyService.saveAggressionHistory(aggressionHistoryRequestDto), HttpStatus.OK);
         }
