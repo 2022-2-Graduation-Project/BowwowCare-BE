@@ -4,6 +4,9 @@ import com.bowwowcare.sm.advice.exception.InvalidRefreshTokenException;
 import com.bowwowcare.sm.advice.exception.LoginFailureException;
 import com.bowwowcare.sm.advice.exception.UserEmailAlreadyExistsException;
 import com.bowwowcare.sm.advice.exception.UserNotFoundException;
+import com.bowwowcare.sm.domain.enums.Role;
+import com.bowwowcare.sm.domain.theme.Theme;
+import com.bowwowcare.sm.domain.theme.ThemeRepository;
 import com.bowwowcare.sm.domain.user.Member;
 import com.bowwowcare.sm.domain.user.MemberRepository;
 import com.bowwowcare.sm.dto.token.TokenRequestDto;
@@ -20,6 +23,8 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Collections;
+
 @Service
 @Transactional(readOnly = true)
 @RequiredArgsConstructor
@@ -28,6 +33,7 @@ public class SignService {
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
+    private final ThemeRepository themeRepository;
 
     /**
      * dto로 들어온 값을 통해 회원가입 진행
@@ -41,9 +47,23 @@ public class SignService {
                 Member.builder()
                         .email(userRegisterRequestDto.getEmail())
                         .password(passwordEncoder.encode(userRegisterRequestDto.getPassword()))
-                        //.provider(null)
+                        .roles(Collections.singletonList(Role.ROLE_USER))
                         .username(userRegisterRequestDto.getUsername())
+                        .profileImage(null)
+                        .reward(10)
+                        .theme(0)
                         .build());
+
+        Theme theme = themeRepository.save(
+                Theme.builder()
+                        .theme1(Boolean.FALSE)
+                        .theme2(Boolean.FALSE)
+                        .theme3(Boolean.FALSE)
+                        .theme4(Boolean.FALSE)
+                        .theme5(Boolean.FALSE)
+                        .member(member)
+                        .build()
+        );
 
         return UserRegisterResponseDto.builder()
                 .id(member.getId())
