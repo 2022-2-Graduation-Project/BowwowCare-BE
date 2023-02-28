@@ -67,7 +67,7 @@ public class PetController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @GetMapping("/pets/{petId}")
-    public PetInfoResponseDto infoPet(@PathVariable("petId") int petId) {
+    public PetInfoResponseDto infoPet(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails, @PathVariable("petId") int petId) {
         PetInfoResponseDto responseDto = petService.findPetById(petId);
         return responseDto;
     }
