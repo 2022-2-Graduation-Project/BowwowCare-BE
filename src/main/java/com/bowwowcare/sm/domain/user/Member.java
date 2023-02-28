@@ -1,10 +1,7 @@
 package com.bowwowcare.sm.domain.user;
 
 import com.bowwowcare.sm.domain.enums.Role;
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 import java.util.ArrayList;
@@ -13,6 +10,9 @@ import java.util.List;
 
 @Entity
 @Getter
+@Data
+@AllArgsConstructor
+@Builder
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 public class Member {
 
@@ -21,30 +21,29 @@ public class Member {
     @Column(name = "user_id")
     private Long id;
 
-    @Column(nullable = false, length = 15)
-    private String username;
-
     @Column(nullable = false,unique = true)
     private String email;
 
+    @Column(nullable = false, length = 15)
+    private String username;
+
     private String password;
+
+    private String refreshToken;
+
+    private int theme;
+
+    private int reward;
+
+    @Lob
+    @Column
+    private byte[] profileImage;
 
     @ElementCollection(fetch = FetchType.LAZY)
     @Enumerated(EnumType.STRING)
     private List<Role> roles = new ArrayList<>();
 
-    private String refreshToken;
 
-    /*@Column
-    private String profileImgUrl;*/
-
-    @Builder
-    public Member(String email, String username, String password, List<Role>roles) {
-        this.email = email;
-        this.password = password;
-        this.roles = Collections.singletonList(Role.ROLE_USER);
-        this.username = username;
-    }
 
     public void addRole(Role role){
         this.roles.add(role);
@@ -54,11 +53,4 @@ public class Member {
         this.refreshToken = refreshToken;
     }
 
-
-    /*public User update(String name, String profileImgUrl) {
-        this.name = name;
-        this.profileImgUrl = profileImgUrl;
-
-        return this;
-    }*/
 }
