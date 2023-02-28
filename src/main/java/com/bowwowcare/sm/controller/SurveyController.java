@@ -1,11 +1,13 @@
 package com.bowwowcare.sm.controller;
 
+import com.bowwowcare.sm.config.security.member.MemberDetails;
 import com.bowwowcare.sm.dto.history.AnxietyHistoryRequestDto;
 import com.bowwowcare.sm.dto.survey.AggressionRequestDto;
 import com.bowwowcare.sm.dto.survey.AnxietyRequestDto;
 import com.bowwowcare.sm.service.HistoryService;
 import com.bowwowcare.sm.service.SurveyService;
 import io.swagger.v3.oas.annotations.Operation;
+import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.media.Content;
 import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
@@ -14,6 +16,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -35,7 +38,7 @@ public class SurveyController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping(value = "/v1/survey/aggression", headers = { "Content-type=application/json" })
-    public ResponseEntity<?> findAggressionSurveyResult(@RequestBody List<AggressionRequestDto> aggressionRequestDtoList) {
+    public ResponseEntity<?> findAggressionSurveyResult(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails, @RequestBody List<AggressionRequestDto> aggressionRequestDtoList) {
         //return new ResponseEntity<>(surveyService.findResult(aggressionRequestDto), HttpStatus.OK);
         try {
             return new ResponseEntity<>(surveyService.findAggressionResult(aggressionRequestDtoList), HttpStatus.OK);
@@ -54,7 +57,7 @@ public class SurveyController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping(value = "/v1/survey/anxiety", headers = { "Content-type=application/json" })
-    public ResponseEntity<?> findAnxietySurveyResult(@RequestBody List<AnxietyRequestDto> anxietyRequestDtoList) {
+    public ResponseEntity<?> findAnxietySurveyResult(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails, @RequestBody List<AnxietyRequestDto> anxietyRequestDtoList) {
         try {
             return new ResponseEntity<>(surveyService.findAnxietyResult(anxietyRequestDtoList), HttpStatus.OK);
         }
@@ -73,7 +76,7 @@ public class SurveyController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @GetMapping("/v1/behaviors")
-    public ResponseEntity<?> returnAggressionBehaviorContent() {
+    public ResponseEntity<?> returnAggressionBehaviorContent(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails) {
         try {
             return new ResponseEntity<>(surveyService.selectAggressionBehavior(), HttpStatus.OK);
         } catch (Exception e) {
@@ -90,7 +93,7 @@ public class SurveyController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @GetMapping("/v1/questions/{type}")
-    public ResponseEntity<?> returnSurveyQuestion(@PathVariable("type") String type) {
+    public ResponseEntity<?> returnSurveyQuestion(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails, @PathVariable("type") String type) {
         try {
             return new ResponseEntity<>(surveyService.selectSurveyQuestion(type), HttpStatus.OK);
         } catch (Exception e) {
