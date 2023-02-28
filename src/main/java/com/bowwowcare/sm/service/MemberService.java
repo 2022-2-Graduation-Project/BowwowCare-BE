@@ -6,6 +6,8 @@ import com.bowwowcare.sm.domain.theme.ThemeRepository;
 import com.bowwowcare.sm.domain.user.Member;
 import com.bowwowcare.sm.domain.user.MemberRepository;
 import com.bowwowcare.sm.dto.user.UserInfoResponseDto;
+import com.bowwowcare.sm.dto.user.UserInfoUpdateRequestDto;
+import com.bowwowcare.sm.dto.user.UserInfoUpdateResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
@@ -61,5 +63,32 @@ public class MemberService {
         if(theme.isTheme5()) { result.add(5); }
 
         return result;
+    }
+
+
+    public UserInfoUpdateResponseDto updateUserInfo(MemberDetails memberDetails, UserInfoUpdateRequestDto userInfoUpdateRequestDto) {
+
+        Member member = memberRepository.getOne(memberRepository.findByEmail(memberDetails.getUsername()).get().getId());
+
+        //이름 update
+        member.setUsername(userInfoUpdateRequestDto.getUsername());
+        //사진 update
+        if(userInfoUpdateRequestDto.getProfileImage() == null){
+            member.setProfileImage(null);
+        }
+        else {
+            member.setProfileImage(userInfoUpdateRequestDto.getProfileImage().getBytes());
+        }
+        //현재 테마 update
+        member.setTheme(userInfoUpdateRequestDto.getTheme());
+        memberRepository.save(member);
+
+
+        return UserInfoUpdateResponseDto.builder()
+                .id(member.getId().intValue())
+                .username(member.getUsername())
+                .profileImage(new String(member.getProfileImage(), StandardCharsets.UTF_8))
+                .theme(member.getTheme())
+                .build();
     }
 }
