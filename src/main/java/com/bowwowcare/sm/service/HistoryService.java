@@ -1,9 +1,6 @@
 package com.bowwowcare.sm.service;
 
-import com.bowwowcare.sm.domain.history.AggressionHistory;
-import com.bowwowcare.sm.domain.history.AggressionHistoryRepository;
-import com.bowwowcare.sm.domain.history.AnxietyHistory;
-import com.bowwowcare.sm.domain.history.AnxietyHistoryRepository;
+import com.bowwowcare.sm.domain.history.*;
 import com.bowwowcare.sm.domain.pet.PetRepository;
 import com.bowwowcare.sm.dto.history.AggressionHistoryRequestDto;
 import com.bowwowcare.sm.dto.history.AggressionHistoryResponseDto;
@@ -125,6 +122,32 @@ public class HistoryService {
         return result;
     }
 
+
+    private AggressionHistoryType getAggressionHistoryTypeByRequestDto(List<Integer> list) {
+
+        Collections.sort(list);
+        AggressionHistoryType aggressionHistoryType = new AggressionHistoryType();
+
+        for (Integer integer : list) {
+            if (integer == 0) { aggressionHistoryType.setType0(Boolean.TRUE); }
+            else if (integer == 1) { aggressionHistoryType.setType1(Boolean.TRUE); }
+            else if (integer == 2) { aggressionHistoryType.setType2(Boolean.TRUE); }
+        }
+
+        return aggressionHistoryType;
+    }
+
+    private List<Integer> getAggressionHistoryTypeIntegerList(AggressionHistoryType aggressionHistoryType) {
+
+        List<Integer> result = new ArrayList<>();
+
+        if(aggressionHistoryType.isType0()) { result.add(0); }
+        if(aggressionHistoryType.isType1()) { result.add(1); }
+        if(aggressionHistoryType.isType2()) { result.add(2); }
+
+        return result;
+    }
+
     public AggressionHistoryResponseDto saveAggressionHistory(AggressionHistoryRequestDto aggressionHistoryRequestDto) {
 
         List<Integer> list = aggressionHistoryRequestDto.getSituation();
@@ -133,7 +156,7 @@ public class HistoryService {
 
         int x = aggressionHistoryRequestDto.getPetId();
         AggressionHistory aggressionHistory = AggressionHistory.builder()
-                .aggressionType(aggressionHistoryRequestDto.getAggressionType())
+                .aggressionHistoryType(getAggressionHistoryTypeByRequestDto(aggressionHistoryRequestDto.getAggressionType()))
                 .situation1(situationList.get(0))
                 .situation2(situationList.get(1))
                 .situation3(situationList.get(2))
@@ -148,7 +171,7 @@ public class HistoryService {
 
         return AggressionHistoryResponseDto.builder()
                 .id(aggressionHistory.getId())
-                .aggressionType(aggressionHistory.getAggressionType())
+                .aggressionType(getAggressionHistoryTypeIntegerList(aggressionHistory.getAggressionHistoryType()))
                 .situation(getAggressionResponseSituationList(aggressionHistory))
                 .petId(aggressionHistory.getPet().getId())
                 .build();
