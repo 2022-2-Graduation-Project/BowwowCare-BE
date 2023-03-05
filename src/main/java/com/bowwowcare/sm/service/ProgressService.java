@@ -1,15 +1,13 @@
 package com.bowwowcare.sm.service;
 
-import com.bowwowcare.sm.domain.history.AggressionHistory;
-import com.bowwowcare.sm.domain.history.AggressionHistoryRepository;
-import com.bowwowcare.sm.domain.history.AnxietyHistory;
-import com.bowwowcare.sm.domain.history.AnxietyHistoryRepository;
+import com.bowwowcare.sm.domain.history.*;
 import com.bowwowcare.sm.dto.progress.ProgressResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -91,6 +89,18 @@ public class ProgressService {
 
 
 
+
+    private List<Integer> getAggressionHistoryTypeList(AggressionHistoryType aggressionHistoryType){
+
+        List<Integer> result = new ArrayList<>();
+
+        if(aggressionHistoryType.isType0()) { result.add(0); }
+        if(aggressionHistoryType.isType1()) { result.add(1); }
+        if(aggressionHistoryType.isType2()) { result.add(2); }
+
+        return result;
+    }
+
     public ProgressResponseDto calAggressionProgress(int id) {
 
         int historyId = id;
@@ -104,14 +114,14 @@ public class ProgressService {
             AggressionHistory pastAggressionHistory = aggressionHistoryList.get(x-1);
 
 
-            int pastAggressionType = pastAggressionHistory.getAggressionType();
-            int currentAggressionType = currentAggressionHistory.getAggressionType();
+            List<Integer> pastHistoryTypeList = getAggressionHistoryTypeList(pastAggressionHistory.getAggressionHistoryType());
+            List<Integer> currentHistoryTypeList = getAggressionHistoryTypeList(currentAggressionHistory.getAggressionHistoryType());
 
             int currentSituations = findAggressionTotalSituation(currentAggressionHistory);
             int pastSituations = findAggressionTotalSituation(pastAggressionHistory);
 
             Long period = ChronoUnit.DAYS.between(currentAggressionHistory.getCreatedDate(), pastAggressionHistory.getCreatedDate());
-            List<String> message = getAggressionProgressMessage(pastAggressionType, currentAggressionType, pastSituations, currentSituations, period.intValue() * -1);
+            List<String> message = getAggressionProgressMessage(pastHistoryTypeList, currentHistoryTypeList, pastSituations, currentSituations, period.intValue() * -1);
 
 
             return ProgressResponseDto.builder()
@@ -129,22 +139,27 @@ public class ProgressService {
 
     }
 
-    private String getAggressionType(int type) {
+    private List<String> getAggressionProgressMessage(List<Integer> pastType, List<Integer> currentType, int past, int current, int period) {
 
-        String answer = "";
-        if(type == 0 || type == 1) { answer = "행동 준비 단계"; }
-        if(type == 2) { answer = "극단적 행동 단계"; }
-
-        return answer;
-    }
-
-    private List<String> getAggressionProgressMessage(int pastType, int currentType, int past, int current, int period) {
-
-        String pT = getAggressionType(pastType);
-        String cT = getAggressionType(currentType);
         List<String> result = new ArrayList<>();
+        Collections.sort(pastType);
+        Collections.sort(currentType);
+        String pT = "";
+        String cT = "";
 
-        if(Objects.equals(pT, cT)){
+        if(pastType.contains(2) && (!currentType.contains(2))) {
+            pT = "극단적 행동 단계";
+            cT = "행동 준비 단계";
+            result.add("참 잘했어요:)");
+            result.add(pT + "에서 " + cT + "로 바뀌었어요!");
+        }
+        else if((!pastType.contains(2)) && currentType.contains(2)) {
+            pT = "행동 준비 단계";
+            cT = "극단적 행동 단계";
+            result.add("분발하세요:(");
+            result.add(pT + "에서 " + cT + "로 바뀌었어요!");
+        }
+        else {
             result.add("아이의 행동 단계가 같아요.");
             if(past < current) {
                 result.add("아이의 공격 의심 상황이 "+ period + "일 전에 비해 증가했어요!");
@@ -154,16 +169,6 @@ public class ProgressService {
             }
             if(past == current) {
                 result.add("아이의 공격 의심 상황이 " + period + "일 전과 같아요!");
-            }
-        }
-        else {
-            if(pT.equals("행동 준비 단계") && cT.equals("극단적 행동 단계")){
-                result.add("분발하세요:(");
-                result.add(pT + "에서 " + cT + "로 바뀌었어요!");
-            }
-            else if(pT.equals("극단적 행동 단계") && cT.equals("행동 준비 단계")) {
-                result.add("참 잘했어요:)");
-                result.add(pT + "에서 " + cT + "로 바뀌었어요!");
             }
         }
         result.add("앞으로 더 노력해보세요!");
