@@ -14,7 +14,7 @@ import java.util.List;
 public class AggressionHistoryResponseDto {
 
     private Long id;
-    private int aggressionType;
+    private List<Integer> aggressionType;
     private List<Integer> situation;
     private Long petId;
 }

@@ -15,7 +15,7 @@ import java.util.List;
 @Builder
 public class AggressionHistoryRequestDto {
 
-    private int aggressionType;
+    private List<Integer> aggressionType;
 
     private List<Integer> situation;
 
