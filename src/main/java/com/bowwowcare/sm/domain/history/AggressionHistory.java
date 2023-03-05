@@ -18,8 +18,9 @@ public class AggressionHistory {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column
-    private int aggressionType;
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "aggression_history_type")
+    private AggressionHistoryType aggressionHistoryType;
 
     @Column(nullable = false)
     private boolean situation1;
@@ -50,10 +51,10 @@ public class AggressionHistory {
     private Pet pet;
 
     @Builder
-    public AggressionHistory(int aggressionType, boolean situation1, boolean situation2, boolean situation3, boolean situation4,
+    public AggressionHistory(AggressionHistoryType aggressionHistoryType, boolean situation1, boolean situation2, boolean situation3, boolean situation4,
                              boolean situation5, boolean situation6, boolean situation7, LocalDate createdDate, Pet pet){
 
-        this.aggressionType = aggressionType;
+        this.aggressionHistoryType = aggressionHistoryType;
         this.situation1 = situation1;
         this.situation2 = situation2;
         this.situation3 = situation3;
