@@ -129,7 +129,9 @@ public class SurveyService {
         return result;
     }
 
+
     //anxiety 문진표 결과 반환
+    @Transactional
     public List<AnxietyResponseDto> findAnxietyResult(List<AnxietyRequestDto> anxietyRequestDtoList) throws UnsupportedEncodingException{
 
         List<AnxietyResponseDto> final_result = new ArrayList<>();

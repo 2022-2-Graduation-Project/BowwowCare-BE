@@ -8,6 +8,7 @@ import com.bowwowcare.sm.dto.history.AnxietyHistoryRequestDto;
 import com.bowwowcare.sm.dto.history.AnxietyHistoryResponseDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +22,7 @@ public class HistoryService {
     private final PetRepository petRepository;
     private final AggressionHistoryRepository aggressionHistoryRepository;
 
-
+    @Transactional
     public AnxietyHistoryResponseDto saveAnxietyHistory(AnxietyHistoryRequestDto anxietyHistoryRequestDto) {
 
 
@@ -148,6 +149,7 @@ public class HistoryService {
         return result;
     }
 
+    @Transactional
     public AggressionHistoryResponseDto saveAggressionHistory(AggressionHistoryRequestDto aggressionHistoryRequestDto) {
 
         List<Integer> list = aggressionHistoryRequestDto.getSituation();

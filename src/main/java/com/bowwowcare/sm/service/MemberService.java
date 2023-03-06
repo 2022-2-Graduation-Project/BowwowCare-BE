@@ -8,6 +8,7 @@ import com.bowwowcare.sm.domain.user.MemberRepository;
 import com.bowwowcare.sm.dto.user.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
@@ -19,6 +20,7 @@ public class MemberService {
 
     private final MemberRepository memberRepository;
     private final ThemeRepository themeRepository;
+
 
     public UserInfoResponseDto findUserInfo(MemberDetails memberDetails) {
 
@@ -63,7 +65,7 @@ public class MemberService {
         return result;
     }
 
-
+    @Transactional
     public UserInfoUpdateResponseDto updateUserInfo(MemberDetails memberDetails, UserInfoUpdateRequestDto userInfoUpdateRequestDto) {
 
         Member member = memberRepository.getOne(memberRepository.findByEmail(memberDetails.getUsername()).get().getId());
@@ -91,7 +93,7 @@ public class MemberService {
     }
 
 
-
+    @Transactional
     public UserThemeResponseDto updateTheme(MemberDetails memberDetails, UserThemeRequestDto userThemeRequestDto) {
 
         Member member = memberRepository.getOne(memberRepository.findByEmail(memberDetails.getUsername()).get().getId());
