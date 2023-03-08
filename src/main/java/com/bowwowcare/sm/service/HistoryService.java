@@ -1,6 +1,11 @@
 package com.bowwowcare.sm.service;
 
+import com.bowwowcare.sm.domain.care.AggressionCare;
+import com.bowwowcare.sm.domain.care.AggressionCareRepository;
+import com.bowwowcare.sm.domain.care.AggressionType;
+import com.bowwowcare.sm.domain.care.AggressionTypeRepository;
 import com.bowwowcare.sm.domain.history.*;
+import com.bowwowcare.sm.domain.pet.Pet;
 import com.bowwowcare.sm.domain.pet.PetRepository;
 import com.bowwowcare.sm.dto.history.AggressionHistoryRequestDto;
 import com.bowwowcare.sm.dto.history.AggressionHistoryResponseDto;
@@ -21,6 +26,10 @@ public class HistoryService {
     private final AnxietyHistoryRepository anxietyHistoryRepository;
     private final PetRepository petRepository;
     private final AggressionHistoryRepository aggressionHistoryRepository;
+
+    private final AggressionTypeRepository aggressionTypeRepository;
+    private final AggressionCareRepository aggressionCareRepository;
+
 
     @Transactional
     public AnxietyHistoryResponseDto saveAnxietyHistory(AnxietyHistoryRequestDto anxietyHistoryRequestDto) {
@@ -171,11 +180,81 @@ public class HistoryService {
                 .build();
         aggressionHistoryRepository.save(aggressionHistory);
 
+        saveAggressionCareByAggressionHistory(aggressionHistory);
+
         return AggressionHistoryResponseDto.builder()
                 .id(aggressionHistory.getId())
                 .aggressionType(getAggressionHistoryTypeIntegerList(aggressionHistory.getAggressionHistoryType()))
                 .situation(getAggressionResponseSituationList(aggressionHistory))
                 .petId(aggressionHistory.getPet().getId())
                 .build();
+    }
+
+
+    @Transactional
+    void saveAggressionCareByAggressionHistory(AggressionHistory aggressionHistory) {
+
+        Pet pet = aggressionHistory.getPet();
+
+        //AggressionHistory의 situation목록을 보고 해당 solution에 대해 Long타입의 List생성
+        List<Integer> solutionList = getAggressionResponseSituationList(aggressionHistory);
+
+        //동일한 pet과 solution에 대해 AggressionCare에 존재하지 않는다면 새로 생성
+        for (Integer integer : solutionList) {
+            if (aggressionCareRepository.existsAggressionCareBySolutionAndPetId(integer, pet.getId())) {
+                AggressionCare care = aggressionCareRepository.findAggressionCareBySolutionAndPetId(integer, pet.getId());
+                care.setModifiedAt(aggressionHistory.getCreatedDate());
+                care.setAggressionType(updateAggressionTypeForCare(aggressionHistory, care));
+                aggressionCareRepository.save(care);
+            } else {
+                aggressionCareRepository.save(
+                        AggressionCare.builder()
+                                .count(0)
+                                .missionDate(null)
+                                .solution(integer)
+                                .aggressionType(createAggressionTypeForCare(aggressionHistory))
+                                .modifiedAt(aggressionHistory.getCreatedDate())
+                                .isCompleted(Boolean.FALSE)
+                                .pet(pet)
+                                .build()
+                );
+            }
+        }
+    }
+
+    private AggressionType createAggressionTypeForCare(AggressionHistory aggressionHistory){
+
+        //반환할 AggressionType 생성 후 초기화
+        AggressionType aggressionType = new AggressionType();
+        aggressionType.setType0(Boolean.FALSE);
+        aggressionType.setType1(Boolean.FALSE);
+        aggressionType.setType2(Boolean.FALSE);
+
+        //AggressionHistory로 부터 얻은 AggressionHistoryType 객체
+        AggressionHistoryType aggressionHistoryType = aggressionHistory.getAggressionHistoryType();
+
+        //aggressionHistoryType의 type0,1,2 값에 따라 aggressionType 값 update
+        if(aggressionHistoryType.isType0()) { aggressionType.setType0(Boolean.TRUE); }
+        if(aggressionHistoryType.isType1()) { aggressionType.setType1(Boolean.TRUE); }
+        if(aggressionHistoryType.isType2()) { aggressionType.setType2(Boolean.TRUE); }
+
+        return aggressionType;
+    }
+
+    private AggressionType updateAggressionTypeForCare(AggressionHistory aggressionHistory, AggressionCare aggressionCare){
+
+        //기존 AggressionCare의 AggressionType 객체
+        AggressionType aggressionType = aggressionCare.getAggressionType();
+
+        //AggressionHistory의 AggressionType
+        AggressionHistoryType aggressionHistoryType = aggressionHistory.getAggressionHistoryType();
+
+        if(aggressionHistoryType.isType0()) { aggressionType.setType0(Boolean.TRUE); }
+        if(aggressionHistoryType.isType1()) { aggressionType.setType1(Boolean.TRUE); }
+        if(aggressionHistoryType.isType2()) { aggressionType.setType2(Boolean.TRUE); }
+
+        aggressionTypeRepository.save(aggressionType);
+
+        return aggressionType;
     }
 }
