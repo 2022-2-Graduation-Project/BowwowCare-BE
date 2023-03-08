@@ -1,7 +1,6 @@
 package com.bowwowcare.sm.controller;
 
 import com.bowwowcare.sm.advice.result.SingleResult;
-import com.bowwowcare.sm.dto.analyze.AnalyzeRequestDto;
 import com.bowwowcare.sm.dto.token.TokenRequestDto;
 import com.bowwowcare.sm.dto.token.TokenResponseDto;
 import com.bowwowcare.sm.dto.user.UserLoginRequestDto;

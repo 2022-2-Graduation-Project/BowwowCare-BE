@@ -2,7 +2,6 @@ package com.bowwowcare.sm.controller;
 
 import com.bowwowcare.sm.config.security.member.MemberDetails;
 import com.bowwowcare.sm.dto.file.FileResponseDto;
-import com.bowwowcare.sm.dto.survey.AnxietyRequestDto;
 import com.bowwowcare.sm.service.FileUploadService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;

@@ -1,10 +1,8 @@
 package com.bowwowcare.sm.controller;
 
 import com.bowwowcare.sm.config.security.member.MemberDetails;
-import com.bowwowcare.sm.dto.history.AnxietyHistoryRequestDto;
 import com.bowwowcare.sm.dto.survey.AggressionRequestDto;
 import com.bowwowcare.sm.dto.survey.AnxietyRequestDto;
-import com.bowwowcare.sm.service.HistoryService;
 import com.bowwowcare.sm.service.SurveyService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
