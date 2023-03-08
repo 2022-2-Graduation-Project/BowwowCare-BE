@@ -33,7 +33,7 @@ public class PetService {
                         .gender(Gender.valueOf(petRegisterRequestDto.getGender().toUpperCase()))
                         .petImage(petRegisterRequestDto.getPetImg().getBytes())
                         .birthDate(petRegisterRequestDto.getBirthDate())
-                        .adoptonDate(petRegisterRequestDto.getAdoptionDate())
+                        .adoptionDate(petRegisterRequestDto.getAdoptionDate())
                         .member(memberRepository.findByEmail(memberDetails.getUsername()).get())
                         .build()
         );
