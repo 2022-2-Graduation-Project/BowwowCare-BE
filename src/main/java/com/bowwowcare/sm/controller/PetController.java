@@ -54,7 +54,7 @@ public class PetController {
             return new ResponseEntity<>(petService.findPetListByMember(memberDetails), HttpStatus.OK);
         }
         catch (Exception e){
-            return new ResponseEntity<>("오류!", HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(petService.findPetListByMember(memberDetails), HttpStatus.BAD_REQUEST);
         }
     }
 
