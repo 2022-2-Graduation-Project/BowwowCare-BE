@@ -69,27 +69,13 @@ public class HistoryService {
             result.add(Boolean.FALSE);
         }
         for (Integer integer : list) {
-            if (integer == 1) {
-                result.add(0, Boolean.TRUE);
-            }
-            if (integer == 2) {
-                result.add(1, Boolean.TRUE);
-            }
-            if (integer == 3) {
-                result.add(2, Boolean.TRUE);
-            }
-            if (integer == 4) {
-                result.add(3, Boolean.TRUE);
-            }
-            if (integer == 5) {
-                result.add(4, Boolean.TRUE);
-            }
-            if (integer == 6) {
-                result.add(5, Boolean.TRUE);
-            }
-            if (integer == 7) {
-                result.add(6, Boolean.TRUE);
-            }
+            if (integer == 1) { result.add(0, Boolean.TRUE); }
+            if (integer == 2) { result.add(1, Boolean.TRUE); }
+            if (integer == 3) { result.add(2, Boolean.TRUE); }
+            if (integer == 4) { result.add(3, Boolean.TRUE); }
+            if (integer == 5) { result.add(4, Boolean.TRUE); }
+            if (integer == 6) { result.add(5, Boolean.TRUE); }
+            if (integer == 7) { result.add(6, Boolean.TRUE); }
         }
 
         return result;
