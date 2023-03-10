@@ -120,6 +120,7 @@ public class HistoryService {
                         .missionDate(null)
                         .situation(j)
                         .isCompleted(Boolean.FALSE)
+                        .sequence(0)
                         .pet(pet)
                         .build();
 
@@ -234,6 +235,7 @@ public class HistoryService {
                                 .aggressionType(createAggressionTypeForCare(aggressionHistory))
                                 .modifiedAt(aggressionHistory.getCreatedDate())
                                 .isCompleted(Boolean.FALSE)
+                                .sequence(0)
                                 .pet(pet)
                                 .build()
                 );
