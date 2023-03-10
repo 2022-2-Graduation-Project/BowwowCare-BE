@@ -1,9 +1,6 @@
 package com.bowwowcare.sm.service;
 
-import com.bowwowcare.sm.domain.care.AggressionCare;
-import com.bowwowcare.sm.domain.care.AggressionCareRepository;
-import com.bowwowcare.sm.domain.care.AggressionType;
-import com.bowwowcare.sm.domain.care.AggressionTypeRepository;
+import com.bowwowcare.sm.domain.care.*;
 import com.bowwowcare.sm.domain.history.*;
 import com.bowwowcare.sm.domain.pet.Pet;
 import com.bowwowcare.sm.domain.pet.PetRepository;
@@ -29,6 +26,7 @@ public class HistoryService {
 
     private final AggressionTypeRepository aggressionTypeRepository;
     private final AggressionCareRepository aggressionCareRepository;
+    private final AnxietyCareRepository anxietyCareRepository;
 
 
     @Transactional
@@ -52,6 +50,9 @@ public class HistoryService {
                 .pet(petRepository.getOne((long) x))
                 .build();
         anxietyHistoryRepository.save(anxietyHistory);
+
+        //anxietyHistory 저장하면서 anxietyCare도 저장
+        saveAnxietyCareByAnxietyHistory(anxietyHistory);
 
         return AnxietyHistoryResponseDto.builder()
                 .id(anxietyHistory.getId())
@@ -112,6 +113,38 @@ public class HistoryService {
 
         return result;
     }
+
+
+    @Transactional
+    void saveAnxietyCareByAnxietyHistory(AnxietyHistory anxietyHistory) {
+
+        Pet pet = anxietyHistory.getPet();
+        //외출 전, 훈련, 외출 후로 나누어서 저장
+        int[] situationList = {1,2,3};
+
+        //각 상황별 그리고 동물 별 없다면 만들어서 저장
+        //있다면 그냥 넘어감
+        for (int j : situationList) {
+            if(anxietyCareRepository.existsAnxietyCareBySituationAndPetId(j, pet.getId())) {
+                continue;
+            }
+            else {
+                AnxietyCare care = AnxietyCare.builder()
+                        .count(0)
+                        .missionDate(null)
+                        .situation(j)
+                        .isCompleted(Boolean.FALSE)
+                        .pet(pet)
+                        .build();
+
+                anxietyCareRepository.save(care);
+            }
+        }
+    }
+
+
+
+
 
     /**
      * responseDto 에 실을 situation 리스트 만드는 메서드
