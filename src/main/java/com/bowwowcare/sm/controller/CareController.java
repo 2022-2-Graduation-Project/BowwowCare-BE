@@ -37,4 +37,20 @@ public class CareController {
             return new ResponseEntity<>(careService.findAggressionCareList(petId), HttpStatus.BAD_REQUEST);
         }
     }
+
+    @Operation(summary = "Care api", description = "분리불안 Care api")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @GetMapping("/care/anxiety/{petId}")
+    public ResponseEntity<?> getAnxietyCareList(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails, @PathVariable("petId") int petId) {
+        try {
+            return new ResponseEntity<>(careService.findAnxietyCareList(petId), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(careService.findAnxietyCareList(petId), HttpStatus.BAD_REQUEST);
+        }
+    }
 }
