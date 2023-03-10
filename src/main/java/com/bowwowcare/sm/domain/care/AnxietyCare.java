@@ -36,6 +36,9 @@ public class AnxietyCare {
     @Column
     private boolean isCompleted;
 
+    @Column
+    private int sequence;
+
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "petId")
     private Pet pet;
