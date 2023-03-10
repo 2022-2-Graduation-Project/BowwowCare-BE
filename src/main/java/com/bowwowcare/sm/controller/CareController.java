@@ -1,9 +1,12 @@
 package com.bowwowcare.sm.controller;
 
 import com.bowwowcare.sm.config.security.member.MemberDetails;
+import com.bowwowcare.sm.dto.care.CareMissionRequestDto;
 import com.bowwowcare.sm.service.CareService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
+import io.swagger.v3.oas.annotations.media.Content;
+import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -51,6 +54,23 @@ public class CareController {
             return new ResponseEntity<>(careService.findAnxietyCareList(petId), HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity<>(careService.findAnxietyCareList(petId), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "Care 실천 api", description = "미션 실천 여부 api")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = CareMissionRequestDto.class))),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @PostMapping(value = "/care/mission/{type}", headers = { "Content-type=application/json" })
+    public ResponseEntity<?> saveMissionCount(@Parameter(hidden = true) @AuthenticationPrincipal MemberDetails memberDetails, @PathVariable("type") String type,
+                                              @RequestBody CareMissionRequestDto careMissionRequestDto) {
+        try {
+            return new ResponseEntity<>(careService.CalCareMissionCount(careMissionRequestDto, type, memberDetails), HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity<>(careService.CalCareMissionCount(careMissionRequestDto, type, memberDetails), HttpStatus.BAD_REQUEST);
         }
     }
 }
