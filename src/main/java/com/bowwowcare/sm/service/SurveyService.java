@@ -53,50 +53,50 @@ public class SurveyService {
      */
     @Transactional
     public AnxietyResult saveAnxiety(AnxietyResult anxietyResult) {
-        /*if(anxietyResultRepository.exists(Example.of(anxietyResult))) {
+        if(anxietyResultRepository.exists(Example.of(anxietyResult))) {
             AnxietyResult result = anxietyResultRepository.findAnxietyResultBySituation(anxietyResult.getSituation());
             return anxietyResultRepository.getOne(result.getId());
         }
         else {
             return anxietyResultRepository.save(anxietyResult);
-        }*/
-        return anxietyResultRepository.save(anxietyResult);
+        }
+        //return anxietyResultRepository.save(anxietyResult);
     }
 
     @Transactional
     public AggressionBehavior saveAggressionBehavior(AggressionBehavior aggressionBehavior) {
-        /*if(aggressionBehaviorRepository.exists(Example.of(aggressionBehavior))) {
+        if(aggressionBehaviorRepository.exists(Example.of(aggressionBehavior))) {
             AggressionBehavior behavior = aggressionBehaviorRepository.findAggressionBehaviorByContent(aggressionBehavior.getContent());
             return aggressionBehaviorRepository.getOne(behavior.getId());
         }
         else {
             return aggressionBehaviorRepository.save(aggressionBehavior);
-        }*/
-        return aggressionBehaviorRepository.save(aggressionBehavior);
+        }
+        //return aggressionBehaviorRepository.save(aggressionBehavior);
     }
 
     @Transactional
     public AggressionQuestion saveAggressionQuestion(AggressionQuestion aggressionQuestion) {
-        /*if(aggressionQuestionRepository.exists(Example.of(aggressionQuestion))) {
+        if(aggressionQuestionRepository.exists(Example.of(aggressionQuestion))) {
             AggressionQuestion question = aggressionQuestionRepository.findAggressionQuestionByContent(aggressionQuestion.getContent());
             return aggressionQuestionRepository.getOne(question.getId());
         }
         else {
             return aggressionQuestionRepository.save(aggressionQuestion);
-        }*/
-        return aggressionQuestionRepository.save(aggressionQuestion);
+        }
+        //return aggressionQuestionRepository.save(aggressionQuestion);
     }
 
     @Transactional
     public AnxietyQuestion saveAnxietyQuestion(AnxietyQuestion anxietyQuestion) {
-        /*if(anxietyQuestionRepository.exists(Example.of(anxietyQuestion))) {
+        if(anxietyQuestionRepository.exists(Example.of(anxietyQuestion))) {
             AnxietyQuestion question = anxietyQuestionRepository.findAnxietyQuestionByContent(anxietyQuestion.getContent());
             return anxietyQuestionRepository.getOne(question.getId());
         }
         else {
             return anxietyQuestionRepository.save(anxietyQuestion);
-        }*/
-        return anxietyQuestionRepository.save(anxietyQuestion);
+        }
+        //return anxietyQuestionRepository.save(anxietyQuestion);
     }
 
 
