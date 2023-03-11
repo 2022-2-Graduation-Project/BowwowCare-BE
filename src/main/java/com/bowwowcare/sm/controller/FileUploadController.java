@@ -34,7 +34,7 @@ public class FileUploadController {
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PostMapping(value = "/image")
-    public FileResponseDto uploadFile(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails, @RequestParam MultipartFile file)
+    public FileResponseDto uploadFile(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails, @RequestPart("file") MultipartFile file)
             throws IOException {
         return fileUploadService.saveUploadFile(file);
     }
