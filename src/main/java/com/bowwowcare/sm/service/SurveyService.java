@@ -12,6 +12,7 @@ import com.bowwowcare.sm.domain.survey_result.AnxietyResult;
 import com.bowwowcare.sm.domain.survey_result.AnxietyResultRepository;
 import com.bowwowcare.sm.dto.survey.*;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Example;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -37,7 +38,13 @@ public class SurveyService {
      */
     @Transactional
     public AggressionResult saveAggression(AggressionResult aggressionResult) {
-        return aggressionResultRepository.save(aggressionResult);
+        if(aggressionResultRepository.exists(Example.of(aggressionResult))) {
+            AggressionResult result = aggressionResultRepository.findAggressionResultBySituation(aggressionResult.getSituation());
+            return aggressionResultRepository.getOne(result.getId());
+        }
+        else {
+            return aggressionResultRepository.save(aggressionResult);
+        }
     }
 
     /**
@@ -46,23 +53,46 @@ public class SurveyService {
      */
     @Transactional
     public AnxietyResult saveAnxiety(AnxietyResult anxietyResult) {
-        return anxietyResultRepository.save(anxietyResult);
+        if(anxietyResultRepository.exists(Example.of(anxietyResult))) {
+            AnxietyResult result = anxietyResultRepository.findAnxietyResultBySituation(anxietyResult.getSituation());
+            return anxietyResultRepository.getOne(result.getId());
+        }
+        else {
+            return anxietyResultRepository.save(anxietyResult);
+        }
     }
 
     @Transactional
     public AggressionBehavior saveAggressionBehavior(AggressionBehavior aggressionBehavior) {
-        return aggressionBehaviorRepository.save(aggressionBehavior);
+        if(aggressionBehaviorRepository.exists(Example.of(aggressionBehavior))) {
+            AggressionBehavior behavior = aggressionBehaviorRepository.findAggressionBehaviorByContent(aggressionBehavior.getContent());
+            return aggressionBehaviorRepository.getOne(behavior.getId());
+        }
+        else {
+            return aggressionBehaviorRepository.save(aggressionBehavior);
+        }
     }
 
     @Transactional
     public AggressionQuestion saveAggressionQuestion(AggressionQuestion aggressionQuestion) {
-        return aggressionQuestionRepository.save(aggressionQuestion);
+        if(aggressionQuestionRepository.exists(Example.of(aggressionQuestion))) {
+            AggressionQuestion question = aggressionQuestionRepository.findAggressionQuestionByContent(aggressionQuestion.getContent());
+            return aggressionQuestionRepository.getOne(question.getId());
+        }
+        else {
+            return aggressionQuestionRepository.save(aggressionQuestion);
+        }
     }
 
-    //TODO:추가
     @Transactional
     public AnxietyQuestion saveAnxietyQuestion(AnxietyQuestion anxietyQuestion) {
-        return anxietyQuestionRepository.save(anxietyQuestion);
+        if(anxietyQuestionRepository.exists(Example.of(anxietyQuestion))) {
+            AnxietyQuestion question = anxietyQuestionRepository.findAnxietyQuestionByContent(anxietyQuestion.getContent());
+            return anxietyQuestionRepository.getOne(question.getId());
+        }
+        else {
+            return anxietyQuestionRepository.save(anxietyQuestion);
+        }
     }
 
 
