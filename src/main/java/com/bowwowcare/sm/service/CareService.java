@@ -129,6 +129,7 @@ public class CareService {
                     aggressionCare.setSequence(aggressionCare.getSequence() + ((int) sequence * -1));
                     if(aggressionCare.getSequence() == 7) {
                         msg = "리워드가 지급되었어요! 확인하러 가보세요:)";
+                        aggressionCare.setSequence(0);
                         member.setReward(member.getReward() + 5);
                         memberRepository.save(member);
                     }
@@ -172,6 +173,7 @@ public class CareService {
                     anxietyCare.setSequence(anxietyCare.getSequence() + ((int) sequence * -1));
                     if(anxietyCare.getSequence() == 7) {
                         msg = "리워드가 지급되었어요! 확인하러 가보세요:)";
+                        anxietyCare.setSequence(0);
                         member.setReward(member.getReward() + 5);
                         memberRepository.save(member);
                     }
