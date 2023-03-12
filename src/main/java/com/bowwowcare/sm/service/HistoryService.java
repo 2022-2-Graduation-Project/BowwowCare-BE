@@ -224,6 +224,8 @@ public class HistoryService {
             if (aggressionCareRepository.existsAggressionCareBySolutionAndPetId(integer, pet.getId())) {
                 AggressionCare care = aggressionCareRepository.findAggressionCareBySolutionAndPetId(integer, pet.getId());
                 care.setModifiedAt(aggressionHistory.getCreatedDate());
+                care.setCount(updateAggressionCareCount(makeTypeIntegerListByAggressionType(care.getAggressionType()),
+                        makeTypeIntegerListByAggressionHistoryType(aggressionHistory.getAggressionHistoryType()), care.getCount()));
                 care.setAggressionType(updateAggressionTypeForCare(aggressionHistory, care));
                 aggressionCareRepository.save(care);
             } else {
@@ -282,5 +284,45 @@ public class HistoryService {
         aggressionTypeRepository.save(aggressionType);
 
         return aggressionType;
+    }
+
+    private int updateAggressionCareCount(List<Integer> original, List<Integer> renewal, int originalCount) {
+
+        int count = 0;
+        //원래 2가 없을 때
+        if(original.contains(2) == Boolean.FALSE) {
+            //새로운 타입에 2가 있다면 count 초기화
+            if(renewal.contains(2)) {
+                return count;
+            }
+            //새로운 타입에 2가 없거나 유지상태이면 count 그대로
+            return originalCount;
+        }
+        //원래 2가 있을 때 - 상태가 유지 혹은 좋아지면 count 유지
+        else {
+            return originalCount;
+        }
+    }
+
+    private List<Integer> makeTypeIntegerListByAggressionType(AggressionType aggressionType) {
+
+        List<Integer> result = new ArrayList<>();
+
+        if(aggressionType.isType0()) { result.add(0); }
+        if(aggressionType.isType1()) { result.add(1); }
+        if(aggressionType.isType2()) { result.add(2); }
+
+        return result;
+    }
+
+    private List<Integer> makeTypeIntegerListByAggressionHistoryType(AggressionHistoryType aggressionHistoryType) {
+
+        List<Integer> result = new ArrayList<>();
+
+        if(aggressionHistoryType.isType0()) { result.add(0); }
+        if(aggressionHistoryType.isType1()) { result.add(1); }
+        if(aggressionHistoryType.isType2()) { result.add(2); }
+
+        return result;
     }
 }
