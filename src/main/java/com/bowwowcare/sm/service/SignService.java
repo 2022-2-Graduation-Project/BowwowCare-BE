@@ -56,6 +56,11 @@ public class SignService {
                                 .theme3(Boolean.FALSE)
                                 .theme4(Boolean.FALSE)
                                 .theme5(Boolean.FALSE)
+                                .theme6(Boolean.FALSE)
+                                .theme7(Boolean.FALSE)
+                                .theme8(Boolean.FALSE)
+                                .theme9(Boolean.FALSE)
+                                .theme10(Boolean.FALSE)
                                 .build())
                         .build());
 

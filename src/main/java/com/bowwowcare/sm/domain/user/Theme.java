@@ -31,4 +31,19 @@ public class Theme {
 
     @Column
     private boolean theme5;
+
+    @Column
+    private boolean theme6;
+
+    @Column
+    private boolean theme7;
+
+    @Column
+    private boolean theme8;
+
+    @Column
+    private boolean theme9;
+
+    @Column
+    private boolean theme10;
 }

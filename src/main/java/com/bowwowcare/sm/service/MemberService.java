@@ -59,6 +59,11 @@ public class MemberService {
         if(theme.isTheme3()) { result.add(3); }
         if(theme.isTheme4()) { result.add(4); }
         if(theme.isTheme5()) { result.add(5); }
+        if(theme.isTheme6()) { result.add(6); }
+        if(theme.isTheme7()) { result.add(7); }
+        if(theme.isTheme8()) { result.add(8); }
+        if(theme.isTheme9()) { result.add(9); }
+        if(theme.isTheme10()) { result.add(10); }
 
         return result;
     }
@@ -136,6 +141,11 @@ public class MemberService {
         if(themeNum == 3) { theme.setTheme3(Boolean.TRUE); }
         if(themeNum == 4) { theme.setTheme4(Boolean.TRUE); }
         if(themeNum == 5) { theme.setTheme5(Boolean.TRUE); }
+        if(themeNum == 6) { theme.setTheme6(Boolean.TRUE); }
+        if(themeNum == 7) { theme.setTheme7(Boolean.TRUE); }
+        if(themeNum == 8) { theme.setTheme8(Boolean.TRUE); }
+        if(themeNum == 9) { theme.setTheme9(Boolean.TRUE); }
+        if(themeNum == 10) { theme.setTheme10(Boolean.TRUE); }
         return theme;
     }
 }
