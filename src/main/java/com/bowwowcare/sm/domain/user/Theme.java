@@ -1,4 +1,4 @@
-package com.bowwowcare.sm.domain.theme;
+package com.bowwowcare.sm.domain.user;
 
 import com.bowwowcare.sm.domain.user.Member;
 import lombok.*;

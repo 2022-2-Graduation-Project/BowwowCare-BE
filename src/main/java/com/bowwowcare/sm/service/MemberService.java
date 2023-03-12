@@ -1,8 +1,7 @@
 package com.bowwowcare.sm.service;
 
 import com.bowwowcare.sm.config.security.member.MemberDetails;
-import com.bowwowcare.sm.domain.theme.Theme;
-import com.bowwowcare.sm.domain.theme.ThemeRepository;
+import com.bowwowcare.sm.domain.user.Theme;
 import com.bowwowcare.sm.domain.user.Member;
 import com.bowwowcare.sm.domain.user.MemberRepository;
 import com.bowwowcare.sm.dto.user.*;
