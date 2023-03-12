@@ -43,7 +43,7 @@ public class MemberService {
                 .id(member.getId())
                 .email(member.getEmail())
                 .username(member.getUsername())
-                .theme(member.getTheme())
+                .theme(member.getCurrentTheme())
                 .reward(member.getReward())
                 .availableTheme(themeList)
                 .profileImage(img)
@@ -80,7 +80,7 @@ public class MemberService {
             member.setProfileImage(userInfoUpdateRequestDto.getProfileImage().getBytes());
         }
         //현재 테마 update
-        member.setTheme(userInfoUpdateRequestDto.getTheme());
+        member.setCurrentTheme(userInfoUpdateRequestDto.getTheme());
         memberRepository.save(member);
 
 
@@ -88,7 +88,7 @@ public class MemberService {
                 .id(member.getId().intValue())
                 .username(member.getUsername())
                 .profileImage(new String(member.getProfileImage(), StandardCharsets.UTF_8))
-                .theme(member.getTheme())
+                .theme(member.getCurrentTheme())
                 .build();
     }
 
@@ -113,7 +113,7 @@ public class MemberService {
             if(!themeList.contains(wantedTheme)){
                 msg = "테마가 변경되었어요:)";
                 updateUserAvailableThemeList(theme, wantedTheme);
-                member.setTheme(wantedTheme);
+                member.setCurrentTheme(wantedTheme);
                 member.setReward(userBone - bone);
             }
             else {
