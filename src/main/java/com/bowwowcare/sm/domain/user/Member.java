@@ -32,6 +32,10 @@ public class Member {
 
     private int currentTheme;
 
+    @OneToOne(cascade = CascadeType.ALL)
+    @JoinColumn(name = "theme")
+    private Theme theme;
+
     private int reward;
 
     @Lob

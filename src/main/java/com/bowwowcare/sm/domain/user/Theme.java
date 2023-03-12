@@ -31,8 +31,4 @@ public class Theme {
 
     @Column
     private boolean theme5;
-
-    @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name = "userId")
-    private Member member;
 }
