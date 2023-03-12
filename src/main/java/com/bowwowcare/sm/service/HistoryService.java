@@ -270,6 +270,11 @@ public class HistoryService {
         //AggressionHistory의 AggressionType
         AggressionHistoryType aggressionHistoryType = aggressionHistory.getAggressionHistoryType();
 
+        //기존 aggressionType List 초기화 후 갱신 진행
+        aggressionType.setType0(Boolean.FALSE);
+        aggressionType.setType1(Boolean.FALSE);
+        aggressionType.setType2(Boolean.FALSE);
+
         if(aggressionHistoryType.isType0()) { aggressionType.setType0(Boolean.TRUE); }
         if(aggressionHistoryType.isType1()) { aggressionType.setType1(Boolean.TRUE); }
         if(aggressionHistoryType.isType2()) { aggressionType.setType2(Boolean.TRUE); }
