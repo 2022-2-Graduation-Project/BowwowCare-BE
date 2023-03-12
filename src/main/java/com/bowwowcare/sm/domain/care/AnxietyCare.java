@@ -34,6 +34,9 @@ public class AnxietyCare {
     private int situation;
 
     @Column
+    private LocalDate modifiedAt;
+
+    @Column
     private boolean isCompleted;
 
     @Column

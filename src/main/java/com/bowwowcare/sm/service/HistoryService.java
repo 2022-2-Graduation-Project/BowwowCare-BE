@@ -112,7 +112,9 @@ public class HistoryService {
         //있다면 그냥 넘어감
         for (int j : situationList) {
             if(anxietyCareRepository.existsAnxietyCareBySituationAndPetId(j, pet.getId())) {
-                continue;
+                AnxietyCare care = anxietyCareRepository.findAnxietyCareBySituationAndPetId(j, pet.getId());
+                care.setModifiedAt(anxietyHistory.getCreatedDate());
+                anxietyCareRepository.save(care);
             }
             else {
                 AnxietyCare care = AnxietyCare.builder()
@@ -121,6 +123,7 @@ public class HistoryService {
                         .situation(j)
                         .isCompleted(Boolean.FALSE)
                         .sequence(0)
+                        .modifiedAt(anxietyHistory.getCreatedDate())
                         .pet(pet)
                         .build();
 
