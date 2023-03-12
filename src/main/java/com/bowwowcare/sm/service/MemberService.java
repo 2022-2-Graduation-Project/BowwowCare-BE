@@ -18,7 +18,6 @@ import java.util.List;
 public class MemberService {
 
     private final MemberRepository memberRepository;
-    private final ThemeRepository themeRepository;
 
 
     public UserInfoResponseDto findUserInfo(MemberDetails memberDetails) {
@@ -51,7 +50,7 @@ public class MemberService {
 
     private List<Integer> findAvailableThemeList(Long id) {
 
-        Theme theme = themeRepository.findThemeByMemberId(id).get();
+        Theme theme = memberRepository.getOne(id).getTheme();
         List<Integer> result = new ArrayList<>();
 
         result.add(0);
@@ -96,7 +95,7 @@ public class MemberService {
     public UserThemeResponseDto updateTheme(MemberDetails memberDetails, UserThemeRequestDto userThemeRequestDto) {
 
         Member member = memberRepository.getOne(memberRepository.findByEmail(memberDetails.getUsername()).get().getId());
-        Theme theme = themeRepository.findThemeByMemberId(member.getId()).get();
+        Theme theme = memberRepository.getOne(member.getId()).getTheme();
 
         //해제하고 싶은 테마
         int wantedTheme = userThemeRequestDto.getTheme();
@@ -111,7 +110,7 @@ public class MemberService {
         if(userBone >= bone) {
             if(!themeList.contains(wantedTheme)){
                 msg = "테마가 변경되었어요:)";
-                updateUserAvailableThemeList(theme, wantedTheme);
+                member.setTheme(updateUserAvailableThemeList(theme, wantedTheme));
                 member.setCurrentTheme(wantedTheme);
                 member.setReward(userBone - bone);
             }
@@ -130,13 +129,13 @@ public class MemberService {
                 .build();
     }
 
-    private void updateUserAvailableThemeList(Theme theme, int themeNum) {
+    private Theme updateUserAvailableThemeList(Theme theme, int themeNum) {
 
         if(themeNum == 1) { theme.setTheme1(Boolean.TRUE); }
         if(themeNum == 2) { theme.setTheme2(Boolean.TRUE); }
         if(themeNum == 3) { theme.setTheme3(Boolean.TRUE); }
         if(themeNum == 4) { theme.setTheme4(Boolean.TRUE); }
         if(themeNum == 5) { theme.setTheme5(Boolean.TRUE); }
-        themeRepository.save(theme);
+        return theme;
     }
 }
