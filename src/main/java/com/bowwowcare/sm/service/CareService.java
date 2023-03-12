@@ -82,6 +82,7 @@ public class CareService {
                     .missionDate(care.getMissionDate())
                     .situation(new String(anxietyResultRepository.getOne((long) care.getSituation()).getSituation(), StandardCharsets.UTF_8))
                     .solution(getSolutionListByAnxietyCare(care))
+                    .modifiedAt(care.getModifiedAt())
                     .isCompleted(care.isCompleted())
                     .build();
             result.add(anxietyCareResponseDto);

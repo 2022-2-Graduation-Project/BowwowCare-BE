@@ -19,5 +19,6 @@ public class AnxietyCareResponseDto {
     private LocalDate missionDate;
     private String situation;
     private List<String> solution;
+    private LocalDate modifiedAt;
     private Boolean isCompleted;
 }
