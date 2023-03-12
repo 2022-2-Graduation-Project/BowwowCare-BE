@@ -32,7 +32,6 @@ public class SignService {
     private final JwtTokenProvider jwtTokenProvider;
     private final MemberRepository memberRepository;
     private final PasswordEncoder passwordEncoder;
-    private final ThemeRepository themeRepository;
 
     /**
      * dto로 들어온 값을 통해 회원가입 진행
@@ -50,19 +49,16 @@ public class SignService {
                         .username(userRegisterRequestDto.getUsername())
                         .profileImage(null)
                         .reward(10)
-                        .theme(0)
+                        .currentTheme(0)
+                        .theme(Theme.builder()
+                                .theme1(Boolean.FALSE)
+                                .theme2(Boolean.FALSE)
+                                .theme3(Boolean.FALSE)
+                                .theme4(Boolean.FALSE)
+                                .theme5(Boolean.FALSE)
+                                .build())
                         .build());
 
-        Theme theme = themeRepository.save(
-                Theme.builder()
-                        .theme1(Boolean.FALSE)
-                        .theme2(Boolean.FALSE)
-                        .theme3(Boolean.FALSE)
-                        .theme4(Boolean.FALSE)
-                        .theme5(Boolean.FALSE)
-                        .member(member)
-                        .build()
-        );
 
         return UserRegisterResponseDto.builder()
                 .id(member.getId())
