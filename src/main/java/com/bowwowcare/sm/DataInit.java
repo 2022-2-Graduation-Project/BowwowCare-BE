@@ -166,7 +166,7 @@ public class DataInit {
 
         AggressionQuestion aggressionQuestion1 = surveyService.saveAggressionQuestion(
                 AggressionQuestion.builder()
-                        .content("낯선자가 방문했나요?".getBytes())
+                        .content("낯선 사람이 방문했나요?".getBytes())
                         .build()
         );
         AggressionQuestion aggressionQuestion2 = surveyService.saveAggressionQuestion(
@@ -191,7 +191,7 @@ public class DataInit {
         );
         AggressionQuestion aggressionQuestion6 = surveyService.saveAggressionQuestion(
                 AggressionQuestion.builder()
-                        .content("먹이는 부족했나요?".getBytes())
+                        .content("먹이가 부족했나요?".getBytes())
                         .build()
         );
         AggressionQuestion aggressionQuestion7 = surveyService.saveAggressionQuestion(
@@ -217,7 +217,7 @@ public class DataInit {
         );
         AnxietyQuestion anxietyQuestion4 = surveyService.saveAnxietyQuestion(
                 AnxietyQuestion.builder()
-                        .content("측대보를 하나요?".getBytes())
+                        .content("앞뒷다리가 동시에 같은 방향으로 움직이나요?".getBytes())
                         .build()
         );
         AnxietyQuestion anxietyQuestion5 = surveyService.saveAnxietyQuestion(
