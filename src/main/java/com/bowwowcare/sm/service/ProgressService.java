@@ -2,9 +2,11 @@ package com.bowwowcare.sm.service;
 
 import com.bowwowcare.sm.domain.history.*;
 import com.bowwowcare.sm.dto.progress.ProgressResponseDto;
+import com.bowwowcare.sm.dto.survey.AnxietyRequestDto;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDate;
 import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -18,23 +20,20 @@ public class ProgressService {
     private final AnxietyHistoryRepository anxietyHistoryRepository;
     private final AggressionHistoryRepository aggressionHistoryRepository;
 
-    public ProgressResponseDto calAnxietyProgress(int id) {
+    public ProgressResponseDto calAnxietyProgress(List<AnxietyRequestDto> anxietyRequestDtoList, int petId) {
 
-        int historyId = id;
-        Long petId = anxietyHistoryRepository.getOne((long)id).getPet().getId();
+        //해당 pet의 가장 최신 history List 불러옴
+        List<AnxietyHistory> anxietyHistoryList = anxietyHistoryRepository.findAnxietyHistoriesByPetIdOrderByCreatedDateDesc((long)petId);
 
-        if(historyId != 1) {
+        if(anxietyHistoryList.size() != 0) {
 
-            AnxietyHistory currentAnxietyHistory = anxietyHistoryRepository.getOne((long) historyId);
-            List<AnxietyHistory> anxietyHistoryList = anxietyHistoryRepository.findAnxietyHistoryListByPet(petId);
-            int x = anxietyHistoryList.indexOf(currentAnxietyHistory);
-            AnxietyHistory pastAnxietyHistory = anxietyHistoryList.get(x-1);
+            //가장 최신의 history
+            AnxietyHistory pastAnxietyHistory = anxietyHistoryList.get(0);
 
-            int currentSituations = findAnxietyTotalSituation(currentAnxietyHistory);
             int pastSituations = findAnxietyTotalSituation(pastAnxietyHistory);
-            Long period = ChronoUnit.DAYS.between(currentAnxietyHistory.getCreatedDate(), pastAnxietyHistory.getCreatedDate());
-            List<String> msg = getAnxietyProgressMessage(pastSituations, currentSituations, period.intValue() * -1);
-
+            int currentSituations = findAnxietyTotalSituationByRequestDto(anxietyRequestDtoList);
+            Long period = ChronoUnit.DAYS.between(pastAnxietyHistory.getCreatedDate(), LocalDate.now());
+            List<String> msg = getAnxietyProgressMessage(pastSituations, currentSituations, period.intValue());
 
             return ProgressResponseDto.builder()
                     .message(msg)
@@ -48,7 +47,6 @@ public class ProgressService {
                     .message(msg)
                     .build();
         }
-
     }
 
 
@@ -64,6 +62,16 @@ public class ProgressService {
         if(anxietyHistory.isSituation7()) { result += 1; }
 
         return result;
+    }
+
+    private int findAnxietyTotalSituationByRequestDto(List<AnxietyRequestDto> anxietyRequestDtoList) {
+
+        int total = 0;
+        for(AnxietyRequestDto dto : anxietyRequestDtoList) {
+            if(dto.isChecked()) { total += 1; }
+        }
+
+        return total;
     }
 
     private List<String> getAnxietyProgressMessage(int past, int current, int period) {

@@ -10,4 +10,7 @@ public interface AnxietyHistoryRepository extends JpaRepository<AnxietyHistory, 
 
     @Query(nativeQuery = true, value = "select * from anxiety_history a where a.pet_id = :petId")
     List<AnxietyHistory> findAnxietyHistoryListByPet(@Param("petId") Long petId);
+
+    List<AnxietyHistory> findAnxietyHistoriesByPetIdOrderByCreatedDateDesc(Long pet_id);
+
 }
