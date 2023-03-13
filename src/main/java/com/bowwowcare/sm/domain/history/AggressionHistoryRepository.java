@@ -10,4 +10,7 @@ public interface AggressionHistoryRepository extends JpaRepository<AggressionHis
 
     @Query(nativeQuery = true, value = "select * from aggression_history a where a.pet_id = :petId")
     List<AggressionHistory> findAggressionHistoryListByPet(@Param("petId") Long petId);
+
+    List<AggressionHistory> findAggressionHistoriesByPetIdOrderByCreatedDateDesc(Long pet_id);
+
 }

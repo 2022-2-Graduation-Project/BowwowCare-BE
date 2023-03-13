@@ -1,6 +1,7 @@
 package com.bowwowcare.sm.controller;
 
 import com.bowwowcare.sm.config.security.member.MemberDetails;
+import com.bowwowcare.sm.dto.progress.AggressionProgressRequestDto;
 import com.bowwowcare.sm.dto.survey.AnxietyRequestDto;
 import com.bowwowcare.sm.service.ProgressService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -47,19 +48,19 @@ public class ProgressController {
 
     @Operation(summary = "AggressionProgress api", description = "Aggression history 비교 - 칭찬 or 혼내기")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK"),
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = AggressionProgressRequestDto.class))),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @GetMapping(value = "/progress/aggression/{historyId}")
-    public ResponseEntity<?> getAggressionProgress(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails,
-                                                   @PathVariable("historyId") int historyId) {
+    @GetMapping(value = "/progress/aggression/{petId}", headers = { "Content-type=application/json" })
+    public ResponseEntity<?> getAggressionProgress(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails, @RequestBody AggressionProgressRequestDto requestDtoList,
+                                                   @PathVariable("petId") int petId) {
         try {
-            return new ResponseEntity<>(progressService.calAggressionProgress(historyId), HttpStatus.OK);
+            return new ResponseEntity<>(progressService.calAggressionProgress(requestDtoList, petId), HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntity<>(progressService.calAggressionProgress(historyId), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(progressService.calAggressionProgress(requestDtoList, petId), HttpStatus.BAD_REQUEST);
         }
     }
 }
