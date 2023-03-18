@@ -17,6 +17,7 @@ public class DataInit {
 
     private final SurveyService surveyService;
 
+
     @PostConstruct
     public void init() {
 
@@ -63,7 +64,6 @@ public class DataInit {
                         .solution("개는 억제와 좌절감을 연관 짓는 법을 학습하게 되어 공분하지 않은 상태에서도 자신의 욕구가 좌절되거나, 어제되었을 때 공격적인 반응을 보일 수 있습니다. ‘여기 엎드려’, ‘놔둬’ 교육을 철저히 하고 서로 떨어져 있으면 무시하고 개들이 함께 있을 때는 개들과 함께 즐거운 게임이나 놀이를 하며 간식을 양손으로 줘보세요.".getBytes())
                         .build()
         );
-
 
 
         //분리불안 문진 situation 저장
@@ -164,6 +164,7 @@ public class DataInit {
         );
 
 
+
         AggressionQuestion aggressionQuestion1 = surveyService.saveAggressionQuestion(
                 AggressionQuestion.builder()
                         .content("낯선 사람이 방문했나요?".getBytes())
@@ -235,5 +236,9 @@ public class DataInit {
                         .content("식분증과 같은 이상행동을 보이나요?".getBytes())
                         .build()
         );
+
+
+
     }
 }
+

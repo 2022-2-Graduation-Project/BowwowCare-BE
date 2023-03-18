@@ -35,7 +35,7 @@ public class ProgressController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @GetMapping(value = "/progress/anxiety/{petId}")
+    @PostMapping(value = "/progress/anxiety/{petId}")
     public ResponseEntity<?> getAnxietyProgress(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails, @RequestBody List<AnxietyRequestDto> anxietyRequestDtoList,
                                                 @PathVariable("petId") int petId) {
         try {
@@ -53,7 +53,7 @@ public class ProgressController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @GetMapping(value = "/progress/aggression/{petId}", headers = { "Content-type=application/json" })
+    @PostMapping(value = "/progress/aggression/{petId}", headers = { "Content-type=application/json" })
     public ResponseEntity<?> getAggressionProgress(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails, @RequestBody AggressionProgressRequestDto requestDtoList,
                                                    @PathVariable("petId") int petId) {
         try {
