@@ -1,8 +1,9 @@
 package com.bowwowcare.sm.controller;
 
 import com.bowwowcare.sm.config.security.member.MemberDetails;
-import com.bowwowcare.sm.dto.user.UserInfoUpdateRequestDto;
+import com.bowwowcare.sm.dto.user.UserImageUpdateRequestDto;
 import com.bowwowcare.sm.dto.user.UserThemeRequestDto;
+import com.bowwowcare.sm.dto.user.UserThemeUpdateRequestDto;
 import com.bowwowcare.sm.service.MemberService;
 import io.swagger.v3.oas.annotations.Operation;
 import io.swagger.v3.oas.annotations.Parameter;
@@ -26,20 +27,37 @@ public class MemberController {
 
     private final MemberService memberService;
 
-    @Operation(summary = "유저 정보 수정 api", description = "유저 정보 업데이트 - 이름, 사진, 현재 테마 변경")
+    @Operation(summary = "유저 정보 수정 api", description = "유저 정보 업데이트 - 사진 변경")
     @ApiResponses({
-            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserInfoUpdateRequestDto.class))),
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserImageUpdateRequestDto.class))),
             @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
     @PutMapping(value = "/user", headers = { "Content-type=application/json" })
-    public ResponseEntity<?> updateMemberInfo(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails, @RequestBody UserInfoUpdateRequestDto userInfoUpdateRequestDto) {
+    public ResponseEntity<?> updateMemberImage(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails, @RequestBody UserImageUpdateRequestDto userImageUpdateRequestDto) {
         try {
-            return new ResponseEntity<>(memberService.updateUserInfo(memberDetails, userInfoUpdateRequestDto), HttpStatus.OK);
+            return new ResponseEntity<>(memberService.updateUserImage(memberDetails, userImageUpdateRequestDto), HttpStatus.OK);
         }
         catch (Exception e) {
-            return new ResponseEntity<>(memberService.updateUserInfo(memberDetails, userInfoUpdateRequestDto), HttpStatus.BAD_REQUEST);
+            return new ResponseEntity<>(memberService.updateUserImage(memberDetails, userImageUpdateRequestDto), HttpStatus.BAD_REQUEST);
+        }
+    }
+
+    @Operation(summary = "유저 정보 수정 api", description = "유저 정보 업데이트 - 테마 변경")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "OK", content = @Content(schema = @Schema(implementation = UserThemeUpdateRequestDto.class))),
+            @ApiResponse(responseCode = "400", description = "BAD REQUEST"),
+            @ApiResponse(responseCode = "404", description = "NOT FOUND"),
+            @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
+    })
+    @PutMapping(value = "/user", headers = { "Content-type=application/json" })
+    public ResponseEntity<?> updateMemberTheme(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails, @RequestBody UserThemeUpdateRequestDto userThemeUpdateRequestDto) {
+        try {
+            return new ResponseEntity<>(memberService.updateUserTheme(memberDetails, userThemeUpdateRequestDto), HttpStatus.OK);
+        }
+        catch (Exception e) {
+            return new ResponseEntity<>(memberService.updateUserTheme(memberDetails, userThemeUpdateRequestDto), HttpStatus.BAD_REQUEST);
         }
     }
 

@@ -69,20 +69,37 @@ public class MemberService {
     }
 
     @Transactional
-    public UserInfoUpdateResponseDto updateUserInfo(MemberDetails memberDetails, UserInfoUpdateRequestDto userInfoUpdateRequestDto) {
+    // New update 메서드 - theme
+    public UserInfoUpdateResponseDto updateUserTheme(MemberDetails memberDetails, UserThemeUpdateRequestDto userThemeUpdateRequestDto) {
 
         Member member = memberRepository.getOne(memberRepository.findByEmail(memberDetails.getUsername()).get().getId());
 
+        //현재 테마 update
+        member.setCurrentTheme(userThemeUpdateRequestDto.getTheme());
+        memberRepository.save(member);
+
+
+        return UserInfoUpdateResponseDto.builder()
+                .id(member.getId().intValue())
+                .username(member.getUsername())
+                .profileImage(new String(member.getProfileImage(), StandardCharsets.UTF_8))
+                .theme(member.getCurrentTheme())
+                .build();
+    }
+
+
+    // New update 메서드 - image
+    public UserInfoUpdateResponseDto updateUserImage(MemberDetails memberDetails, UserImageUpdateRequestDto userImageUpdateRequestDto) {
+
+        Member member = memberRepository.getOne(memberRepository.findByEmail(memberDetails.getUsername()).get().getId());
 
         //사진 update
-        if(userInfoUpdateRequestDto.getProfileImage() == null){
+        if(userImageUpdateRequestDto.getProfileImage() == null){
             member.setProfileImage(null);
         }
         else {
-            member.setProfileImage(userInfoUpdateRequestDto.getProfileImage().getBytes());
+            member.setProfileImage(userImageUpdateRequestDto.getProfileImage().getBytes());
         }
-        //현재 테마 update
-        member.setCurrentTheme(userInfoUpdateRequestDto.getTheme());
         memberRepository.save(member);
 
 

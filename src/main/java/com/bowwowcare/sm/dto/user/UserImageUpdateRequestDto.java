@@ -9,9 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Builder
-public class UserInfoUpdateRequestDto {
-
+public class UserImageUpdateRequestDto {
 
     private String profileImage;
-    private int theme;
 }
