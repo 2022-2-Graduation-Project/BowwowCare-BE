@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @Builder
 public class UserInfoUpdateRequestDto {
 
-    private String username;
+
     private String profileImage;
     private int theme;
 }

@@ -73,8 +73,7 @@ public class MemberService {
 
         Member member = memberRepository.getOne(memberRepository.findByEmail(memberDetails.getUsername()).get().getId());
 
-        //이름 update
-        member.setUsername(userInfoUpdateRequestDto.getUsername());
+
         //사진 update
         if(userInfoUpdateRequestDto.getProfileImage() == null){
             member.setProfileImage(null);
