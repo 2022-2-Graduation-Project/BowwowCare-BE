@@ -34,7 +34,7 @@ public class MemberController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @PutMapping(value = "/user", headers = { "Content-type=application/json" })
+    @PutMapping(value = "/user/image", headers = { "Content-type=application/json" })
     public ResponseEntity<?> updateMemberImage(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails, @RequestBody UserImageUpdateRequestDto userImageUpdateRequestDto) {
         try {
             return new ResponseEntity<>(memberService.updateUserImage(memberDetails, userImageUpdateRequestDto), HttpStatus.OK);
@@ -51,7 +51,7 @@ public class MemberController {
             @ApiResponse(responseCode = "404", description = "NOT FOUND"),
             @ApiResponse(responseCode = "500", description = "INTERNAL SERVER ERROR")
     })
-    @PutMapping(value = "/user", headers = { "Content-type=application/json" })
+    @PutMapping(value = "/user/theme", headers = { "Content-type=application/json" })
     public ResponseEntity<?> updateMemberTheme(@Parameter(hidden=true) @AuthenticationPrincipal MemberDetails memberDetails, @RequestBody UserThemeUpdateRequestDto userThemeUpdateRequestDto) {
         try {
             return new ResponseEntity<>(memberService.updateUserTheme(memberDetails, userThemeUpdateRequestDto), HttpStatus.OK);
