@@ -38,7 +38,7 @@ public class CareService {
             AggressionCareResponseDto aggressionCareResponseDto = AggressionCareResponseDto.builder()
                     .id(care.getId().intValue())
                     .count(care.getCount())
-                    .missionDate(care.getMissionDate().plusDays(1))
+                    .missionDate(care.getMissionDate())
                     .aggressionType(getAggressionTypeListByAggressionCare(care))
                     .solution(new String(aggressionResultRepository.getOne(Long.valueOf(care.getSolution())).getSolution(), StandardCharsets.UTF_8))
                     .modifiedAt(care.getModifiedAt())
@@ -79,7 +79,7 @@ public class CareService {
             AnxietyCareResponseDto anxietyCareResponseDto = AnxietyCareResponseDto.builder()
                     .id(care.getId().intValue())
                     .count(care.getCount())
-                    .missionDate(care.getMissionDate().plusDays(1))
+                    .missionDate(care.getMissionDate())
                     .situation(new String(anxietyResultRepository.getOne((long) care.getSituation()).getSituation(), StandardCharsets.UTF_8))
                     .solution(getSolutionListByAnxietyCare(care))
                     .modifiedAt(care.getModifiedAt())
@@ -143,6 +143,7 @@ public class CareService {
 
             aggressionCare.setMissionDate(careMissionRequestDto.getMissionDate());
             aggressionCare.setCount(aggressionCare.getCount() + 1);
+            aggressionCare.setModifiedAt(aggressionCare.getModifiedAt());
 
             //총 30회 실천했을 때 리워드 지급
             if(aggressionCare.getCount() == 30) {
