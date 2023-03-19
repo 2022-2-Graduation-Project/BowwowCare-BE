@@ -20,12 +20,6 @@ public class Pet {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    /*
-    @Enumerated(EnumType.STRING)
-    @Column(nullable = false)
-    private Type type;
-    */
-
     @Column(nullable = false)
     private String name;
 
@@ -45,7 +39,5 @@ public class Pet {
     @JoinColumn(name = "userId")
     private Member member;
 
-    /*@Enumerated(EnumType.STRING)
-    private Stastus stastus = Stastus.ACTIVE;*/
 
 }

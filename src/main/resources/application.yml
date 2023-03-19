@@ -2,7 +2,7 @@ spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: admin
-    url: jdbc:mysql://bowwowcare.cnhhpt0svaow.ap-northeast-2.rds.amazonaws.com:3306/bowwowcare?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    url: jdbc:mysql://bowwowcare2.cnhhpt0svaow.ap-northeast-2.rds.amazonaws.com:3306/bowwowcare?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
     password: a123456789
 
   jpa:
@@ -12,7 +12,7 @@ spring:
         format_sql: 'true'
         dialect: org.hibernate.dialect.MySQL5InnoDBDialect
     hibernate:
-      ddl-auto: validate
+      ddl-auto: none
     show-sql: 'true'
 
   jwt:
