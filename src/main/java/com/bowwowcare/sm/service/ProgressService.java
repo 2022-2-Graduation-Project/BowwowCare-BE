@@ -33,7 +33,7 @@ public class ProgressService {
 
             int pastSituations = findAnxietyTotalSituation(pastAnxietyHistory);
             int currentSituations = findAnxietyTotalSituationByRequestDto(anxietyRequestDtoList);
-            Long period = ChronoUnit.DAYS.between(pastAnxietyHistory.getCreatedDate().plusDays(1), LocalDate.now());
+            Long period = ChronoUnit.DAYS.between(pastAnxietyHistory.getCreatedDate(), LocalDate.now());
             List<String> msg = getAnxietyProgressMessage(pastSituations, currentSituations, period.intValue());
 
             return ProgressResponseDto.builder()
@@ -121,7 +121,7 @@ public class ProgressService {
 
             List<Integer> pastHistoryTypeList = getAggressionHistoryTypeList(history.getAggressionHistoryType());
             List<Integer> currentHistoryTypeList = requestDto.getAggressionType();
-            Long period = ChronoUnit.DAYS.between(history.getCreatedDate().plusDays(1), LocalDate.now());
+            Long period = ChronoUnit.DAYS.between(history.getCreatedDate(), LocalDate.now());
             List<String> msg = getAggressionProgressMessage(pastHistoryTypeList, currentHistoryTypeList, period.intValue());
 
             return ProgressResponseDto.builder()

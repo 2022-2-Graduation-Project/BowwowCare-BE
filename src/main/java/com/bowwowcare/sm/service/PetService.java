@@ -76,8 +76,8 @@ public class PetService {
                 .name(pet.getName())
                 .petImg(new String(pet.getPetImage(), StandardCharsets.UTF_8))
                 .gender(pet.getGender().toString())
-                .birthDate(pet.getBirthDate().plusDays(1))
-                .adoptionDate(pet.getAdoptionDate().plusDays(1))
+                .birthDate(pet.getBirthDate())
+                .adoptionDate(pet.getAdoptionDate())
                 .memberId(pet.getMember().getId())
                 .build();
     }

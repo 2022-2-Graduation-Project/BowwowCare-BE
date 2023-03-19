@@ -41,7 +41,7 @@ public class CareService {
                     .missionDate(care.getMissionDate().plusDays(1))
                     .aggressionType(getAggressionTypeListByAggressionCare(care))
                     .solution(new String(aggressionResultRepository.getOne(Long.valueOf(care.getSolution())).getSolution(), StandardCharsets.UTF_8))
-                    .modifiedAt(care.getModifiedAt().plusDays(1))
+                    .modifiedAt(care.getModifiedAt())
                     .isCompleted(care.isCompleted())
                     .build();
             result.add(aggressionCareResponseDto);
@@ -82,7 +82,7 @@ public class CareService {
                     .missionDate(care.getMissionDate().plusDays(1))
                     .situation(new String(anxietyResultRepository.getOne((long) care.getSituation()).getSituation(), StandardCharsets.UTF_8))
                     .solution(getSolutionListByAnxietyCare(care))
-                    .modifiedAt(care.getModifiedAt().plusDays(1))
+                    .modifiedAt(care.getModifiedAt())
                     .isCompleted(care.isCompleted())
                     .build();
             result.add(anxietyCareResponseDto);
@@ -125,7 +125,7 @@ public class CareService {
                 aggressionCare.setSequence(0);
             }
             else {
-                long sequence = ChronoUnit.DAYS.between(careMissionRequestDto.getMissionDate(), aggressionCare.getMissionDate().plusDays(1));
+                long sequence = ChronoUnit.DAYS.between(careMissionRequestDto.getMissionDate(), aggressionCare.getMissionDate());
                 if(((int) sequence * -1) == 1) {
                     aggressionCare.setSequence(aggressionCare.getSequence() + ((int) sequence * -1));
                     if(aggressionCare.getSequence() == 6) {
@@ -169,7 +169,7 @@ public class CareService {
                 anxietyCare.setSequence(0);
             }
             else {
-                long sequence = ChronoUnit.DAYS.between(careMissionRequestDto.getMissionDate(), anxietyCare.getMissionDate().plusDays(1));
+                long sequence = ChronoUnit.DAYS.between(careMissionRequestDto.getMissionDate(), anxietyCare.getMissionDate());
                 if(((int) sequence * -1) == 1) {
                     anxietyCare.setSequence(anxietyCare.getSequence() + ((int) sequence * -1));
                     if(anxietyCare.getSequence() == 6) {
@@ -187,6 +187,7 @@ public class CareService {
 
             anxietyCare.setMissionDate(careMissionRequestDto.getMissionDate());
             anxietyCare.setCount(anxietyCare.getCount() + 1);
+            anxietyCare.setModifiedAt(anxietyCare.getModifiedAt());
 
             //총 30회 실천했을 때 리워드 지급
             if(anxietyCare.getCount() == 30) {
