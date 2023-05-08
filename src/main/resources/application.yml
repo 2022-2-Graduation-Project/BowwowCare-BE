@@ -1,9 +1,9 @@
 spring:
   datasource:
     driver-class-name: com.mysql.cj.jdbc.Driver
-    username: admin
-    url: jdbc:mysql://bowwowcare2.cnhhpt0svaow.ap-northeast-2.rds.amazonaws.com:3306/bowwowcare?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
-    password: a123456789
+    username: {username}
+    url: jdbc:mysql://{address}:{port}/{DB_name}?useSSL=false&allowPublicKeyRetrieval=true&serverTimezone=Asia/Seoul&characterEncoding=UTF-8
+    password: {password}
 
   jpa:
     open-in-view: 'true'
@@ -21,10 +21,10 @@ spring:
 cloud:
   aws:
     s3:
-      bucket: bowwowcarebucket
+      bucket: {bucket_name}
     credentials:
-      access-key: AKIAR7CTKROR4SKEXVEW
-      secret-key: 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
+      access-key: {access-key}
+      secret-key: {secret-key}
     region:
       static: ap-northeast-2
       auto: false
